@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SYSTEM_PROMPT, DATA } from '../data';
+import { Send, Bot, User, Key, Info, Sparkles } from 'lucide-react';
 
 const QUICK = [
   "What are his core skills?",
@@ -70,25 +72,22 @@ export default function Chat() {
         }]);
       }
     } else {
-      // Local Mock Mode
-      await new Promise(r => setTimeout(r, 600)); // Simulate delay
+      await new Promise(r => setTimeout(r, 800));
       let reply = '';
       const lowerMsg = msg.toLowerCase();
       
       if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack')) {
-        reply = `Kamesh is highly skilled in modern tech:\n• Frontend: ${DATA.skills.Frontend.join(', ')}\n• Backend: ${DATA.skills.Backend.join(', ')}\n• Databases: ${DATA.skills.Database.join(', ')}`;
+        reply = `Kamesh is highly skilled in modern tech:\n\n• Frontend: ${DATA.skills.Frontend.join(', ')}\n• Backend: ${DATA.skills.Backend.join(', ')}\n• Databases: ${DATA.skills.Database.join(', ')}`;
       } else if (lowerMsg.includes('project') || lowerMsg.includes('community')) {
-        reply = `He has built some impressive projects including:\n` + DATA.projects.map(p => `• ${p.name}: ${p.desc}`).join('\n');
+        reply = `He has built some impressive projects including:\n\n` + DATA.projects.map(p => `• ${p.name}: ${p.desc}`).join('\n\n');
       } else if (lowerMsg.includes('experience') || lowerMsg.includes('work') || lowerMsg.includes('intern')) {
-        reply = `Kamesh has ${DATA.stats[0].value} year(s) of experience. Notably, he's worked as a:\n` + DATA.experience.map(e => `• ${e.role} at ${e.company} (${e.period})`).join('\n');
+        reply = `Kamesh has ${DATA.stats[0].value} year(s) of experience. Notably, he's worked as a:\n\n` + DATA.experience.map(e => `• ${e.role} at ${e.company} (${e.period})`).join('\n\n');
       } else if (lowerMsg.includes('hire') || lowerMsg.includes('available') || lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('phone')) {
         reply = `Yes, Kamesh is open to new opportunities! Feel free to reach out to him at ${DATA.email} or call ${DATA.phone}.`;
       } else if (lowerMsg.includes('education') || lowerMsg.includes('degree') || lowerMsg.includes('college')) {
         reply = `He holds a ${DATA.education.degree} from ${DATA.education.school} (Class of ${DATA.education.year}). Modules include: ${DATA.education.modules.join(', ')}.`;
-      } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi ')) {
-        reply = `Hello! I'm Kamesh's virtual assistant. Try asking me about his skills, projects, or experience!`;
       } else {
-        reply = `I don't quite have the answer to that! However, I'd love to tell you about Kamesh's **skills**, **projects**, **experience**, **education**, or **contact info**. What would you like to know?`;
+        reply = `I'd love to tell you more about Kamesh's **skills**, **projects**, or **experience**. What specific area are you interested in?`;
       }
       setMsgs(prev => [...prev, { role: 'assistant', content: reply }]);
     }
@@ -97,147 +96,152 @@ export default function Chat() {
 
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
-      <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
-        Ask About Me<span style={{ color: '#79ff97' }}>.</span>
-      </h2>
-      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '1.5rem' }}>
-        Powered by Claude AI — ask anything about Kamesh's background, skills, or availability.
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: '0.5rem' }}>
+        <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)' }}>
+          AI Assistant<span style={{ color: '#79ff97' }}>.</span>
+        </h2>
+        <Sparkles size={24} color="#79ff97" />
+      </div>
+      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, marginBottom: '2rem' }}>
+        Learn more about Kamesh through his virtual companion
       </p>
 
-      {/* API Key config */}
-      {showKeyInput && (
-        <div style={{
-          background: '#0d1117', border: '1px solid #e8c87a40',
-          borderRadius: 10, padding: '1rem', marginBottom: 16,
-        }}>
-          <p style={{ color: '#e8c87a', fontSize: 12, marginBottom: 10 }}>
-            ⚠ Enter your Anthropic API key to enable the chat assistant.
-            <a href="https://console.anthropic.com" target="_blank" rel="noreferrer"
-              style={{ color: '#58a6ff', marginLeft: 6 }}>Get one here ↗</a>
-          </p>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <input
-              type="password"
-              placeholder="sk-ant-..."
-              value={apiKey}
-              onChange={e => setApiKey(e.target.value)}
-              style={{
-                flex: 1, background: '#161b22', border: '1px solid #21262d',
-                borderRadius: 8, padding: '8px 12px', color: '#e6edf3',
-                fontSize: 13, outline: 'none',
-              }}
-            />
-            <button onClick={saveKey} style={{
-              background: '#79ff97', color: '#06090f', border: 'none',
-              borderRadius: 8, padding: '8px 16px', cursor: 'pointer',
-              fontSize: 13, fontWeight: 600,
-            }}>Save</button>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 280px', gap: 24, alignItems: 'start' }} className="chat-layout">
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 24, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: 500 }}>
+          {/* Messages */}
+          <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <AnimatePresence initial={false}>
+              {msgs.map((m, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 10 }}
+                >
+                  {m.role === 'assistant' && (
+                    <div style={{ width: 32, height: 32, borderRadius: '35%', background: 'rgba(121,255,151,0.1)', border: '1px solid rgba(121,255,151,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Bot size={18} color="#79ff97" />
+                    </div>
+                  )}
+                  <div style={{
+                    maxWidth: '85%',
+                    background: m.role === 'user' ? '#79ff97' : 'rgba(255,255,255,0.04)',
+                    color: m.role === 'user' ? '#06090f' : '#e6edf3',
+                    borderRadius: m.role === 'user' ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
+                    padding: '12px 18px', fontSize: 14, lineHeight: 1.6,
+                    border: m.role === 'assistant' ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                    whiteSpace: 'pre-wrap',
+                  }}>
+                    {m.content}
+                  </div>
+                  {m.role === 'user' && (
+                    <div style={{ width: 32, height: 32, borderRadius: '35%', background: '#79ff9720', border: '1px solid #79ff9740', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <User size={18} color="#79ff97" />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {loading && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '12px 20px', background: 'rgba(255,255,255,0.03)', borderRadius: 20, width: 'fit-content' }}>
+                <div className="dot-pulse" />
+              </motion.div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Input Area */}
+          <div style={{ padding: '1.2rem', background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ display: 'flex', gap: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '6px 6px 6px 14px' }}>
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                placeholder="Message assistant..."
+                style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', fontSize: 14, outline: 'none' }}
+              />
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => sendMessage()}
+                disabled={loading || !input.trim()}
+                style={{
+                  background: '#79ff97', color: '#06090f', border: 'none', borderRadius: 12,
+                  width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: (loading || !input.trim()) ? 'not-allowed' : 'pointer', opacity: (loading || !input.trim()) ? 0.5 : 1
+                }}
+              >
+                <Send size={18} />
+              </motion.button>
+            </div>
           </div>
         </div>
-      )}
 
-      {/* Chat window */}
-      <div style={{
-        background: '#0d1117', border: '1px solid #21262d',
-        borderRadius: 12, overflow: 'hidden',
-      }}>
-        {/* Messages */}
-        <div style={{
-          height: 400, overflowY: 'auto', padding: '1.5rem',
-          display: 'flex', flexDirection: 'column', gap: 14,
-        }}>
-          {msgs.map((m, i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
-                <div style={{
-                  maxWidth: '82%',
-                  background: m.role === 'user' ? 'var(--accent-green)' : 'var(--bg-glass)',
-                  color: m.role === 'user' ? 'var(--bg)' : 'var(--text-main)',
-                  borderRadius: m.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                  padding: '12px 18px', fontSize: 14, lineHeight: 1.6,
-                  border: m.role === 'assistant' ? '1px solid var(--border-muted)' : 'none',
-                  whiteSpace: 'pre-wrap',
-                }}>
-                  {m.role === 'assistant' && (
-                    <p style={{ color: 'var(--accent-blue)', fontSize: 11, marginBottom: 8, letterSpacing: '0.5px', fontWeight: 600 }}>
-                      ⬡ AI ASSISTANT
-                    </p>
-                  )}
-                  {m.content}
-                </div>
+        {/* Sidebar Info */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: 20, border: '1px solid rgba(232, 200, 122, 0.2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#e8c87a', marginBottom: 12 }}>
+              <Key size={18} />
+              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.5px' }}>CLAUDE AI KEY</span>
             </div>
-          ))}
+            {showKeyInput ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <input
+                  type="password"
+                  value={apiKey}
+                  onChange={e => setApiKey(e.target.value)}
+                  placeholder="sk-ant-..."
+                  style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '8px 12px', color: '#fff', fontSize: 12, outline: 'none' }}
+                />
+                <button onClick={saveKey} style={{ background: '#e8c87a', color: '#06090f', border: 'none', borderRadius: 8, padding: '8px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Save Settings</button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>Key configured</span>
+                <button onClick={() => setShowKeyInput(true)} style={{ background: 'transparent', border: 'none', color: '#e8c87a', fontSize: 11, cursor: 'pointer', textDecoration: 'underline' }}>Edit</button>
+              </div>
+            )}
+          </div>
 
-          {loading && (
-            <div style={{ display: 'flex', gap: 6, padding: '8px 14px', background: '#161b22', borderRadius: 14, width: 'fit-content', border: '1px solid #21262d' }}>
-              {[0, 1, 2].map(i => (
-                <div key={i} style={{
-                  width: 8, height: 8, borderRadius: '50%', background: '#79ff97',
-                  animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
-                }} />
+          <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: 20 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.5)', marginBottom: 16 }}>
+              <Info size={16} />
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.5px' }}>QUICK QUESTIONS</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {QUICK.map(q => (
+                <button key={q} onClick={() => sendMessage(q)} className="quick-chip" style={{ 
+                  textAlign: 'left', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', 
+                  color: 'rgba(255,255,255,0.7)', fontSize: 12, padding: '10px 14px', borderRadius: 12, cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}>
+                  {q}
+                </button>
               ))}
             </div>
-          )}
-          <div ref={bottomRef} />
+          </div>
         </div>
-
-        {/* Input */}
-        <div style={{
-          borderTop: '1px solid #21262d', padding: '1rem',
-          display: 'flex', gap: 8, background: '#0d1117',
-        }}>
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask about skills, projects, availability..."
-            style={{
-              flex: 1, background: '#161b22', border: '1px solid #21262d',
-              borderRadius: 8, padding: '10px 14px', color: '#e6edf3',
-              fontSize: 13, outline: 'none',
-            }}
-          />
-          <button
-            onClick={() => sendMessage()}
-            disabled={loading || !input.trim()}
-            className="glow-btn"
-            style={{
-              background: loading || !input.trim() ? '#161b22' : 'var(--accent-green)',
-              color: loading || !input.trim() ? '#8b949e' : 'var(--bg)',
-              border: 'none', borderRadius: 8,
-              padding: '10px 24px', fontSize: 14,
-              cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
-              fontWeight: 700,
-            }}
-          >
-            Send ↵
-          </button>
-        </div>
-      </div>
-
-      {/* Quick prompts */}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
-        {QUICK.map(q => (
-          <button key={q} onClick={() => sendMessage(q)} style={{
-            background: 'transparent', border: '1px solid #21262d',
-            color: '#8b949e', fontSize: 12, padding: '5px 12px',
-            borderRadius: 20, cursor: 'pointer', transition: 'all 0.2s',
-          }}>
-            {q}
-          </button>
-        ))}
-        <button onClick={() => setShowKeyInput(!showKeyInput)} style={{
-          background: 'transparent', border: '1px solid #e8c87a30',
-          color: '#e8c87a', fontSize: 11, padding: '5px 12px',
-          borderRadius: 20, cursor: 'pointer', }}>
-          ⚙ API Key
-        </button>
       </div>
 
       <style>{`
-        @keyframes bounce {
-          0%,100%{transform:translateY(0);opacity:0.4}
-          50%{transform:translateY(-5px);opacity:1}
+        .dot-pulse {
+          position: relative; left: -9999px; width: 6px; height: 6px; border-radius: 3px;
+          background-color: #79ff97; color: #79ff97; box-shadow: 9999px 0 0 0 #79ff97;
+          animation: dot-pulse 1.5s infinite linear;
+        }
+        @keyframes dot-pulse {
+          0% { box-shadow: 9999px 0 0 -5px #79ff97; }
+          30% { box-shadow: 9999px 0 0 2px #79ff97; }
+          60%, 100% { box-shadow: 9999px 0 0 -5px #79ff97; }
+        }
+        .quick-chip:hover {
+          background: rgba(121, 255, 151, 0.05) !important;
+          border-color: rgba(121, 255, 151, 0.2) !important;
+          color: #79ff97 !important;
+        }
+        @media (max-width: 850px) {
+          .chat-layout { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

@@ -1,8 +1,21 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { DATA } from '../data';
+import { GraduationCap, Award, CheckCircle2 } from 'lucide-react';
 
 export default function Education() {
   const edu = DATA.education;
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.2 } }
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+  };
+
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
@@ -10,42 +23,64 @@ export default function Education() {
       </h2>
       <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Academic background & strengths</p>
 
-      <div className="glass-panel card-anim stagger-1" style={{ padding: '1.5rem', marginBottom: 16, borderTop: '3px solid var(--accent-green)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
-          <div>
-            <h3 style={{ fontWeight: 700, fontSize: 20 }}>{edu.degree}</h3>
-            <p style={{ color: '#79ff97', fontSize: 14, marginTop: 4 }}>{edu.school}</p>
-          </div>
-          <span style={{
-            background: 'rgba(121,255,151,0.1)', border: '1px solid rgba(121,255,151,0.3)',
-            color: '#79ff97', fontSize: 12, padding: '4px 12px', borderRadius: 20,
-          }}>
-            Graduated {edu.year}
-          </span>
-        </div>
-
-        <p style={{ color: '#8b949e', fontSize: 11, letterSpacing: '1px', marginBottom: 10 }}>RELEVANT MODULES</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {edu.modules.map(m => (
-            <span key={m} style={{
-              background: '#161b22', border: '1px solid #21262d',
-              color: '#e6edf3', fontSize: 12, padding: '4px 12px', borderRadius: 6,
-            }}>{m}</span>
-          ))}
-        </div>
-      </div>
-
-      <div className="glass-panel card-anim stagger-2" style={{ padding: '1.5rem', borderTop: '3px solid var(--accent-blue)' }}>
-        <p style={{ color: '#8b949e', fontSize: 11, letterSpacing: '1px', marginBottom: 14 }}>ADDITIONAL STRENGTHS</p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {DATA.strengths.map((s, i) => (
-            <div key={i} style={{ display: 'flex', gap: 10, color: '#8b949e', fontSize: 13, lineHeight: 1.7 }}>
-              <span style={{ color: '#58a6ff', flexShrink: 0 }}>▸</span>
-              {s}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+      >
+        <motion.div 
+          variants={item}
+          className="glass-panel" 
+          style={{ padding: '2rem', marginBottom: 24, borderTop: '3px solid #79ff97', borderRadius: 16 }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#e6edf3', marginBottom: 6 }}>
+                <GraduationCap size={24} color="#79ff97" />
+                <h3 style={{ fontWeight: 800, fontSize: 22 }}>{edu.degree}</h3>
+              </div>
+              <p style={{ color: '#79ff97', fontSize: 15, fontWeight: 500 }}>{edu.school}</p>
             </div>
-          ))}
-        </div>
-      </div>
+            <span style={{
+              background: 'rgba(121,255,151,0.1)', border: '1px solid rgba(121,255,151,0.3)',
+              color: '#79ff97', fontSize: 12, padding: '6px 14px', borderRadius: 20, fontWeight: 600
+            }}>
+              Graduated {edu.year}
+            </span>
+          </div>
+
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, letterSpacing: '1px', marginBottom: 12, fontWeight: 600 }}>RELEVANT COURSEWORK</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {edu.modules.map(m => (
+              <span key={m} style={{
+                background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+                color: '#c9d1d9', fontSize: 13, padding: '5px 14px', borderRadius: 8,
+              }}>{m}</span>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div 
+          variants={item}
+          className="glass-panel" 
+          style={{ padding: '2rem', borderTop: '3px solid #58a6ff', borderRadius: 16 }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#e6edf3', marginBottom: 20 }}>
+            <Award size={20} color="#58a6ff" />
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, letterSpacing: '1px', fontWeight: 600 }}>ADDITIONAL STRENGTHS</p>
+          </div>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+            {DATA.strengths.map((s, i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.6 }}>
+                <CheckCircle2 size={18} color="#58a6ff" style={{ flexShrink: 0, marginTop: 2 }} />
+                {s}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

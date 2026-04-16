@@ -54,6 +54,7 @@ export const DATA = {
       stack: ["React.js", "Node.js", "MongoDB", "REST API"],
       desc: "Full-stack civic tech platform enabling residents to report and track local community issues in real-time. Features user authentication, issue submission forms, status tracking, and an admin dashboard.",
       color: "#79ff97",
+      image: "/projects/civic_tech.png",
     },
     {
       name: "Plant Disease Detection",
@@ -61,6 +62,7 @@ export const DATA = {
       stack: ["Python", "Machine Learning", "Image Processing"],
       desc: "ML-powered system to detect plant diseases from leaf images for early agricultural diagnosis. Trained classification models achieving reliable detection accuracy for multiple disease types.",
       color: "#58a6ff",
+      image: "/projects/ml_plants.png",
     },
     {
       name: "Library Management System",
@@ -68,6 +70,7 @@ export const DATA = {
       stack: ["ASP.NET Core", "Entity Framework", "SQL Server", "MVC"],
       desc: "Full-featured library management system with book inventory, user account handling, borrowing/return system, and overdue tracking using Entity Framework ORM with SQL Server.",
       color: "#f78166",
+      image: "/projects/library.png",
     },
   ],
   education: {

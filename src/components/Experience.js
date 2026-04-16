@@ -1,77 +1,114 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DATA } from '../data';
+import { Briefcase, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Experience() {
   const [expanded, setExpanded] = useState(null);
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.2 } }
+  };
+
+  const item = {
+    hidden: { x: -20, opacity: 0 },
+    show: { x: 0, opacity: 1, transition: { duration: 0.5 } }
+  };
 
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
         Work Experience<span style={{ color: '#79ff97' }}>.</span>
       </h2>
-      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Where I've worked and what I've built</p>
+      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Professional journey so far</p>
 
-      {/* Timeline */}
-      <div style={{ position: 'relative' }}>
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        style={{ position: 'relative' }}
+      >
         <div style={{
           position: 'absolute', left: 20, top: 0, bottom: 0,
-          width: 1, background: 'linear-gradient(to bottom,#79ff97,#21262d)',
+          width: 1, background: 'linear-gradient(to bottom, #79ff97, transparent)',
         }} />
 
         {DATA.experience.map((exp, i) => (
-          <div key={i} style={{ marginBottom: 24, paddingLeft: 52, position: 'relative' }}>
-            {/* Dot */}
+          <motion.div 
+            key={i} 
+            variants={item}
+            style={{ marginBottom: 24, paddingLeft: 52, position: 'relative' }}
+          >
             <div style={{
               position: 'absolute', left: 12, top: 24,
               width: 16, height: 16, borderRadius: '50%',
               background: exp.color, border: '3px solid #06090f',
               boxShadow: `0 0 12px ${exp.color}60`,
+              zIndex: 1
             }} />
 
-            <div className="glass-panel card-anim" style={{
-              padding: '1.5rem',
-              borderLeft: `3px solid ${exp.color}`,
-              cursor: 'pointer',
-            }} onClick={() => setExpanded(expanded === i ? null : i)}>
-
+            <motion.div 
+              className="glass-panel" 
+              whileHover={{ x: 5 }}
+              style={{
+                padding: '1.5rem',
+                borderLeft: `3px solid ${exp.color}`,
+                cursor: 'pointer',
+                borderRadius: '0 16px 16px 0',
+                background: 'rgba(255, 255, 255, 0.01)',
+              }} 
+              onClick={() => setExpanded(expanded === i ? null : i)}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8 }}>
                 <div>
-                  <h3 style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>
+                  <h3 style={{ fontWeight: 700, fontSize: 18, marginBottom: 4, color: '#e6edf3' }}>
                     {exp.role}
                   </h3>
-                  <p style={{ color: exp.color, fontSize: 14 }}>{exp.company}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: exp.color, fontSize: 14, fontWeight: 500 }}>
+                    <Briefcase size={14} /> {exp.company}
+                  </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{
-                    background: `${exp.color}15`, border: `1px solid ${exp.color}40`,
-                    color: exp.color, fontSize: 11, padding: '3px 10px', borderRadius: 20,
-                  }}>{exp.period}</span>
-                  <p style={{ color: '#8b949e', fontSize: 12, marginTop: 4 }}>{exp.type}</p>
+                  <div style={{
+                    background: `${exp.color}15`, border: `1px solid ${exp.color}30`,
+                    color: exp.color, fontSize: 11, padding: '4px 12px', borderRadius: 20,
+                    display: 'flex', alignItems: 'center', gap: 5, fontWeight: 600
+                  }}>
+                    <Calendar size={12} /> {exp.period}
+                  </div>
+                  <p style={{ color: '#8b949e', fontSize: 12, marginTop: 6 }}>{exp.type}</p>
                 </div>
               </div>
 
-              <div style={{
-                maxHeight: expanded === i ? 400 : 0,
-                overflow: 'hidden',
-                transition: 'max-height 0.4s ease',
-              }}>
-                <ul style={{ paddingLeft: 0, listStyle: 'none', marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {exp.bullets.map((b, j) => (
-                    <li key={j} style={{ display: 'flex', gap: 10, color: '#8b949e', fontSize: 13, lineHeight: 1.7 }}>
-                      <span style={{ color: exp.color, flexShrink: 0 }}>▸</span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <AnimatePresence>
+                {expanded === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <ul style={{ paddingLeft: 0, listStyle: 'none', marginTop: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                      {exp.bullets.map((b, j) => (
+                        <li key={j} style={{ display: 'flex', gap: 12, color: 'rgba(255,255,255,0.7)', fontSize: 13, lineHeight: 1.6 }}>
+                          <span style={{ color: exp.color, flexShrink: 0 }}>▹</span>
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <p style={{ color: '#8b949e', fontSize: 11, marginTop: 12, textAlign: 'right' }}>
-                {expanded === i ? '▲ collapse' : '▼ expand'}
-              </p>
-            </div>
-          </div>
+              <div style={{ color: '#8b949e', fontSize: 11, marginTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
+                {expanded === i ? <><ChevronUp size={14} /> View Less</> : <><ChevronDown size={14} /> View Details</>}
+              </div>
+            </motion.div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

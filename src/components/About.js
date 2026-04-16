@@ -1,96 +1,127 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { DATA } from '../data';
+import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare } from 'lucide-react';
 
 export default function About({ setActive }) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
-
   const s = {
-    section: {
-      maxWidth: 1100, margin: '0 auto', padding: '8rem 1.5rem 3rem',
-      opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(24px)',
-      transition: 'all 0.6s ease',
-    },
+    section: { maxWidth: 1100, margin: '0 auto', padding: '8rem 1.5rem 3rem' },
     grid: { display: 'grid', gridTemplateColumns: '1fr auto', gap: '3rem', alignItems: 'center' },
-    tag: { color: 'var(--accent-green)', fontSize: 14, marginBottom: 16, letterSpacing: '1px' },
+    tag: { color: '#79ff97', fontSize: 14, marginBottom: 16, letterSpacing: '1px', fontFamily: 'var(--font-mono)' },
     name: { fontWeight: 800, fontSize: 'clamp(2.5rem,6vw,4.5rem)', lineHeight: 1.05, marginBottom: '0.8rem' },
-    title: { fontWeight: 500, fontSize: 'clamp(1.2rem,2.5vw,1.6rem)', color: 'var(--text-muted)', marginBottom: '1.5rem' },
-    summary: { color: 'var(--text-muted)', lineHeight: 1.85, fontSize: 16, maxWidth: 600, marginBottom: '2.5rem' },
+    title: { fontWeight: 500, fontSize: 'clamp(1.2rem,2.5vw,1.6rem)', color: 'rgba(255,255,255,0.6)', marginBottom: '1.5rem' },
+    summary: { color: 'rgba(255,255,255,0.7)', lineHeight: 1.85, fontSize: 16, maxWidth: 600, marginBottom: '2.5rem' },
     links: { display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: '2rem' },
-    emailBtn: {
-      display: 'flex', alignItems: 'center', gap: 8,
-      color: 'var(--text-main)', textDecoration: 'none',
-      padding: '10px 20px', fontSize: 14, fontWeight: 500,
-    },
-    ghBtn: {
-      background: 'var(--accent-green)', color: 'var(--bg)', textDecoration: 'none',
-      padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 700,
-      transition: 'all 0.3s ease', boxShadow: '0 4px 15px rgba(121,255,151,0.2)'
-    },
-    liBtn: {
-      color: 'var(--text-main)', textDecoration: 'none',
-      padding: '10px 24px', fontSize: 14, fontWeight: 500,
-    },
     meta: { display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '3rem' },
-    metaItem: { color: 'var(--text-muted)', fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 },
+    metaItem: { color: 'rgba(255,255,255,0.5)', fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 },
     avatar: {
-      width: 140, height: 140, borderRadius: '50%',
-      background: 'linear-gradient(135deg,rgba(121,255,151,0.15),rgba(88,166,255,0.15))',
-      border: '2px solid rgba(121,255,151,0.4)',
+      width: 140, height: 140, borderRadius: '24%',
+      background: 'linear-gradient(135deg, rgba(121,255,151,0.1), rgba(88,166,255,0.1))',
+      border: '1px solid rgba(121,255,151,0.3)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontWeight: 800, fontSize: 44, color: 'var(--accent-green)',
-      flexShrink: 0, boxShadow: '0 0 30px rgba(121,255,151,0.2)'
+      fontWeight: 800, fontSize: 44, color: '#79ff97',
+      flexShrink: 0, boxShadow: '0 0 40px rgba(121,255,151,0.1)'
     },
-    statsGrid: {
-      display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))',
-      gap: 16, marginTop: '3.5rem',
-    },
-    statVal: { fontWeight: 800, fontSize: 36, color: 'var(--text-main)', marginBottom: 4 },
-    statLabel: { color: 'var(--accent-green)', fontSize: 13, letterSpacing: '0.5px' },
-    statSub: { color: 'var(--text-muted)', fontSize: 13 },
+  };
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
   return (
-    <section style={s.section}>
+    <motion.section 
+      style={s.section}
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
       <div style={s.grid}>
         <div>
-          <p style={s.tag} className="card-anim stagger-1">&gt; hello world</p>
-          <h1 style={s.name} className="text-gradient card-anim stagger-2">{DATA.name}</h1>
-          <p style={s.title} className="card-anim stagger-2">{DATA.title}</p>
-          <p style={s.summary} className="card-anim stagger-3">{DATA.summary}</p>
-          <div style={s.links} className="card-anim stagger-4">
-            <a href={`mailto:${DATA.email}`} style={s.emailBtn} className="glass-panel glow-btn">✉ Email Me</a>
-            <a href={DATA.github} target="_blank" rel="noreferrer" style={s.ghBtn}>GitHub ↗</a>
-            <a href={DATA.linkedin} target="_blank" rel="noreferrer" style={s.liBtn} className="glass-panel glow-btn">LinkedIn ↗</a>
-          </div>
-          <div style={s.meta} className="card-anim stagger-4">
-            <span style={s.metaItem}>📍 {DATA.location}</span>
-            <span style={s.metaItem}>📱 {DATA.phone}</span>
-          </div>
-          <button
+          <motion.p variants={item} style={s.tag}>&gt; hello_world_</motion.p>
+          <motion.h1 
+            variants={item} 
+            style={s.name} 
+            className="text-gradient"
+          >
+            {DATA.name}
+          </motion.h1>
+          <motion.p variants={item} style={s.title}>{DATA.title}</motion.p>
+          <motion.p variants={item} style={s.summary}>{DATA.summary}</motion.p>
+          
+          <motion.div variants={item} style={s.links}>
+            <a href={`mailto:${DATA.email}`} className="glass-panel hover-glow" style={{ textDecoration: 'none', color: '#fff', padding: '10px 24px', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 600 }}>
+              <Mail size={20} color="#79ff97" /> {DATA.email}
+            </a>
+            <a href={DATA.github} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: '#fff', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
+              <Github size={18} color="#79ff97" /> GitHub
+            </a>
+            <a href={DATA.linkedin} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: '#fff', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
+              <Linkedin size={18} color="#79ff97" /> LinkedIn
+            </a>
+          </motion.div>
+
+          <motion.div variants={item} style={s.meta}>
+            <span style={s.metaItem}><MapPin size={16} /> {DATA.location}</span>
+            <a href={`tel:${DATA.phone}`} style={{ ...s.metaItem, textDecoration: 'none', cursor: 'pointer' }} className="hover-underline">
+              <Phone size={16} /> {DATA.phone}
+            </a>
+          </motion.div>
+
+          <motion.button
+            variants={item}
             onClick={() => setActive('Chat')}
-            className="glow-btn card-anim stagger-4"
+            className="glow-btn"
             style={{
-              background: 'transparent', border: '1px solid var(--border-glow)',
-              color: 'var(--accent-green)', fontSize: 13,
-              padding: '10px 20px', borderRadius: 8, cursor: 'pointer',
+              background: 'rgba(121,255,151,0.05)', border: '1px solid rgba(121,255,151,0.3)',
+              color: '#79ff97', fontSize: 14, fontWeight: 600,
+              padding: '12px 24px', borderRadius: 12, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 10
             }}
           >
-            ⬡ Ask AI about me →
-          </button>
+            <MessageSquare size={18} /> Ask AI Assistant →
+          </motion.button>
         </div>
-        <div style={s.avatar} className="float-anim">KC</div>
+
+        <motion.div 
+          variants={item}
+          style={s.avatar} 
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          KC
+        </motion.div>
       </div>
 
-      <div style={s.statsGrid}>
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))',
+          gap: 16, marginTop: '5rem',
+        }}
+      >
         {DATA.stats.map((st, i) => (
-          <div key={i} className="glass-panel card-anim" style={{ animationDelay: `${0.2 + i * 0.1}s`, padding: '1.5rem', textAlign: 'center' }}>
-            <div style={s.statVal}>{st.value}</div>
-            <div style={s.statLabel}>{st.label}</div>
-            <div style={s.statSub}>{st.sub}</div>
-          </div>
+          <motion.div 
+            key={i} 
+            variants={item}
+            className="glass-panel" 
+            whileHover={{ y: -5, background: 'rgba(255,255,255,0.02)' }}
+            style={{ padding: '2rem', textAlign: 'center', borderRadius: 16 }}
+          >
+            <div style={{ fontWeight: 800, fontSize: 36, color: '#e6edf3', marginBottom: 4 }}>{st.value}</div>
+            <div style={{ color: '#79ff97', fontSize: 13, letterSpacing: '0.5px', fontWeight: 600 }}>{st.label}</div>
+            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{st.sub}</div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

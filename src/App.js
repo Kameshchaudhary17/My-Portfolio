@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Chat from './components/Chat';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
 
 export default function App() {
   const [active, setActive] = useState('About');
@@ -22,6 +23,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#06090f' }}>
+      <CustomCursor />
       <Navbar active={active} setActive={setActive} />
 
       {/* Noise texture overlay */}
