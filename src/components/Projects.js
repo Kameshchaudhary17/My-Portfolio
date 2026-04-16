@@ -87,15 +87,6 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
-
-              <div style={{ display: 'flex', gap: 12 }}>
-                <a href="#" style={{ color: p.color, display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, textDecoration: 'none', fontWeight: 600 }}>
-                  <Github size={16} /> View Code
-                </a>
-                <a href="#" style={{ color: p.color, display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, textDecoration: 'none', fontWeight: 600 }}>
-                  <ExternalLink size={16} /> Live Demo
-                </a>
-              </div>
             </div>
           </motion.div>
         ))}
