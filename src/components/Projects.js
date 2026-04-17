@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { ExternalLink, Github } from 'lucide-react';
 
 export default function Projects() {
   const container = {
