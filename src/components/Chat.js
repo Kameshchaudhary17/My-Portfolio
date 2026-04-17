@@ -98,16 +98,16 @@ export default function Chat() {
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: '0.5rem' }}>
         <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)' }}>
-          AI Assistant<span style={{ color: '#79ff97' }}>.</span>
+          AI Assistant<span style={{ color: 'var(--accent-green)' }}>.</span>
         </h2>
-        <Sparkles size={24} color="#79ff97" />
+        <Sparkles size={24} color="var(--accent-green)" />
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, marginBottom: '2rem' }}>
+      <p style={{ color: 'var(--alpha-50)', fontSize: 13, marginBottom: '2rem' }}>
         Learn more about Kamesh through his virtual companion
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 280px', gap: 24, alignItems: 'start' }} className="chat-layout">
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 24, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: 500 }}>
+        <div style={{ background: 'var(--alpha-02)', border: '1px solid var(--alpha-10)', borderRadius: 24, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: 500 }}>
           {/* Messages */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: 16 }}>
             <AnimatePresence initial={false}>
@@ -119,31 +119,31 @@ export default function Chat() {
                   style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 10 }}
                 >
                   {m.role === 'assistant' && (
-                    <div style={{ width: 32, height: 32, borderRadius: '35%', background: 'rgba(121,255,151,0.1)', border: '1px solid rgba(121,255,151,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Bot size={18} color="#79ff97" />
+                    <div style={{ width: 32, height: 32, borderRadius: '35%', background: 'var(--border-glow)', border: '1px solid rgba(121,255,151,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Bot size={18} color="var(--accent-green)" />
                     </div>
                   )}
                   <div style={{
                     maxWidth: '85%',
-                    background: m.role === 'user' ? '#79ff97' : 'rgba(255,255,255,0.04)',
-                    color: m.role === 'user' ? '#06090f' : '#e6edf3',
+                    background: m.role === 'user' ? 'var(--accent-green)' : 'var(--alpha-04)',
+                    color: m.role === 'user' ? 'var(--text-inverse)' : 'var(--text-main)',
                     borderRadius: m.role === 'user' ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
                     padding: '12px 18px', fontSize: 14, lineHeight: 1.6,
-                    border: m.role === 'assistant' ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                    border: m.role === 'assistant' ? '1px solid var(--alpha-08)' : 'none',
                     whiteSpace: 'pre-wrap',
                   }}>
                     {m.content}
                   </div>
                   {m.role === 'user' && (
                     <div style={{ width: 32, height: 32, borderRadius: '35%', background: '#79ff9720', border: '1px solid #79ff9740', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <User size={18} color="#79ff97" />
+                      <User size={18} color="var(--accent-green)" />
                     </div>
                   )}
                 </motion.div>
               ))}
             </AnimatePresence>
             {loading && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '12px 20px', background: 'rgba(255,255,255,0.03)', borderRadius: 20, width: 'fit-content' }}>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '12px 20px', background: 'var(--alpha-03)', borderRadius: 20, width: 'fit-content' }}>
                 <div className="dot-pulse" />
               </motion.div>
             )}
@@ -151,15 +151,15 @@ export default function Chat() {
           </div>
 
           {/* Input Area */}
-          <div style={{ padding: '1.2rem', background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <div style={{ display: 'flex', gap: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '6px 6px 6px 14px' }}>
+          <div style={{ padding: '1.2rem', background: 'var(--alpha-reverse-20)', borderTop: '1px solid var(--alpha-05)' }}>
+            <div style={{ display: 'flex', gap: 10, background: 'var(--alpha-03)', border: '1px solid var(--alpha-10)', borderRadius: 16, padding: '6px 6px 6px 14px' }}>
               <input
                 ref={inputRef}
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder="Message assistant..."
-                style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', fontSize: 14, outline: 'none' }}
+                style={{ flex: 1, background: 'transparent', border: 'none', color: 'var(--text-main)', fontSize: 14, outline: 'none' }}
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -167,7 +167,7 @@ export default function Chat() {
                 onClick={() => sendMessage()}
                 disabled={loading || !input.trim()}
                 style={{
-                  background: '#79ff97', color: '#06090f', border: 'none', borderRadius: 12,
+                  background: 'var(--accent-green)', color: 'var(--text-inverse)', border: 'none', borderRadius: 12,
                   width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center',
                   cursor: (loading || !input.trim()) ? 'not-allowed' : 'pointer', opacity: (loading || !input.trim()) ? 0.5 : 1
                 }}
@@ -181,7 +181,7 @@ export default function Chat() {
         {/* Sidebar Info */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: 20, border: '1px solid rgba(232, 200, 122, 0.2)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#e8c87a', marginBottom: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--accent-yellow)', marginBottom: 12 }}>
               <Key size={18} />
               <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.5px' }}>CLAUDE AI KEY</span>
             </div>
@@ -192,28 +192,28 @@ export default function Chat() {
                   value={apiKey}
                   onChange={e => setApiKey(e.target.value)}
                   placeholder="sk-ant-..."
-                  style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '8px 12px', color: '#fff', fontSize: 12, outline: 'none' }}
+                  style={{ width: '100%', background: 'var(--alpha-05)', border: '1px solid var(--alpha-10)', borderRadius: 8, padding: '8px 12px', color: 'var(--text-main)', fontSize: 12, outline: 'none' }}
                 />
-                <button onClick={saveKey} style={{ background: '#e8c87a', color: '#06090f', border: 'none', borderRadius: 8, padding: '8px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Save Settings</button>
+                <button onClick={saveKey} style={{ background: 'var(--accent-yellow)', color: 'var(--text-inverse)', border: 'none', borderRadius: 8, padding: '8px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Save Settings</button>
               </div>
             ) : (
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>Key configured</span>
-                <button onClick={() => setShowKeyInput(true)} style={{ background: 'transparent', border: 'none', color: '#e8c87a', fontSize: 11, cursor: 'pointer', textDecoration: 'underline' }}>Edit</button>
+                <span style={{ color: 'var(--alpha-50)', fontSize: 12 }}>Key configured</span>
+                <button onClick={() => setShowKeyInput(true)} style={{ background: 'transparent', border: 'none', color: 'var(--accent-yellow)', fontSize: 11, cursor: 'pointer', textDecoration: 'underline' }}>Edit</button>
               </div>
             )}
           </div>
 
           <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: 20 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.5)', marginBottom: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--alpha-50)', marginBottom: 16 }}>
               <Info size={16} />
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.5px' }}>QUICK QUESTIONS</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {QUICK.map(q => (
                 <button key={q} onClick={() => sendMessage(q)} className="quick-chip" style={{ 
-                  textAlign: 'left', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', 
-                  color: 'rgba(255,255,255,0.7)', fontSize: 12, padding: '10px 14px', borderRadius: 12, cursor: 'pointer',
+                  textAlign: 'left', background: 'var(--alpha-03)', border: '1px solid var(--alpha-05)', 
+                  color: 'var(--alpha-70)', fontSize: 12, padding: '10px 14px', borderRadius: 12, cursor: 'pointer',
                   transition: 'all 0.2s'
                 }}>
                   {q}
@@ -227,18 +227,18 @@ export default function Chat() {
       <style>{`
         .dot-pulse {
           position: relative; left: -9999px; width: 6px; height: 6px; border-radius: 3px;
-          background-color: #79ff97; color: #79ff97; box-shadow: 9999px 0 0 0 #79ff97;
+          background-color: var(--accent-green); color: var(--accent-green); box-shadow: 9999px 0 0 0 var(--accent-green);
           animation: dot-pulse 1.5s infinite linear;
         }
         @keyframes dot-pulse {
-          0% { box-shadow: 9999px 0 0 -5px #79ff97; }
-          30% { box-shadow: 9999px 0 0 2px #79ff97; }
-          60%, 100% { box-shadow: 9999px 0 0 -5px #79ff97; }
+          0% { box-shadow: 9999px 0 0 -5px var(--accent-green); }
+          30% { box-shadow: 9999px 0 0 2px var(--accent-green); }
+          60%, 100% { box-shadow: 9999px 0 0 -5px var(--accent-green); }
         }
         .quick-chip:hover {
-          background: rgba(121, 255, 151, 0.05) !important;
+          background: var(--border-glow) !important;
           border-color: rgba(121, 255, 151, 0.2) !important;
-          color: #79ff97 !important;
+          color: var(--accent-green) !important;
         }
         @media (max-width: 850px) {
           .chat-layout { grid-template-columns: 1fr !important; }

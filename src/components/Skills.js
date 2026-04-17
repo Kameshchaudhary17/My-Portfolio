@@ -27,9 +27,9 @@ export default function Skills() {
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
-        Skills<span style={{ color: '#79ff97' }}>.</span>
+        Skills<span style={{ color: 'var(--accent-green)' }}>.</span>
       </h2>
-      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Technologies I work with</p>
+      <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: '2rem' }}>Technologies I work with</p>
 
       <motion.div
         variants={container}
@@ -61,10 +61,10 @@ export default function Skills() {
           >
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{ color: '#79ff97', background: 'rgba(121, 255, 151, 0.1)', padding: 8, borderRadius: 10 }}>
+              <div style={{ color: 'var(--accent-green)', background: 'var(--border-glow)', padding: 8, borderRadius: 10 }}>
                 {iconMap[category] || <Settings size={20} />}
               </div>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#e6edf3' }}>{category}</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-main)' }}>{category}</h3>
             </div>
 
             {/* Skill Tags */}
@@ -76,9 +76,9 @@ export default function Skills() {
                     fontSize: 12,
                     padding: '4px 10px',
                     borderRadius: 8,
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#8b949e',
+                    background: 'var(--alpha-04)',
+                    border: '1px solid var(--alpha-10)',
+                    color: 'var(--text-muted)',
                   }}
                 >
                   {skill}
@@ -109,7 +109,7 @@ export default function Skills() {
         className="glass-panel" 
         style={{ marginTop: '2.5rem', padding: '2rem', borderRadius: 16 }}
       >
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, letterSpacing: '1px', marginBottom: '1.5rem' }}>PROFICIENCY OVERVIEW</p>
+        <p style={{ color: 'var(--alpha-40)', fontSize: 11, letterSpacing: '1px', marginBottom: '1.5rem' }}>PROFICIENCY OVERVIEW</p>
         {[
           { label: 'React.js / Frontend', pct: 88, color: '#79ff97' },
           { label: 'Node.js / Backend', pct: 82, color: '#58a6ff' },
@@ -119,10 +119,10 @@ export default function Skills() {
         ].map(({ label, pct, color }, idx) => (
           <div key={label} style={{ marginBottom: 18 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, marginBottom: 8 }}>
-              <span style={{ color: '#e6edf3', fontWeight: 500 }}>{label}</span>
+              <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>{label}</span>
               <span style={{ color, fontWeight: 700 }}>{pct}%</span>
             </div>
-            <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 10, height: 8, overflow: 'hidden' }}>
+            <div style={{ background: 'var(--alpha-05)', borderRadius: 10, height: 8, overflow: 'hidden' }}>
               <motion.div 
                 initial={{ width: 0 }}
                 whileInView={{ width: `${pct}%` }}

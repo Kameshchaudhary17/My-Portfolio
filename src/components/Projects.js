@@ -19,9 +19,9 @@ export default function Projects() {
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
-        Projects<span style={{ color: '#79ff97' }}>.</span>
+        Projects<span style={{ color: 'var(--accent-green)' }}>.</span>
       </h2>
-      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>A selection of my recent work</p>
+      <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: '2rem' }}>A selection of my recent work</p>
 
       <motion.div
         variants={container}
@@ -40,7 +40,7 @@ export default function Projects() {
               borderRadius: 20,
               overflow: 'hidden',
               border: '1px solid var(--border-muted)',
-              background: 'rgba(255, 255, 255, 0.02)',
+              background: 'var(--alpha-02)',
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -55,7 +55,7 @@ export default function Projects() {
               />
               <div style={{
                 position: 'absolute', inset: 0,
-                background: `linear-gradient(to bottom, transparent, rgba(6, 9, 15, 0.9))`,
+                background: `linear-gradient(to bottom, transparent, var(--bg))`,
               }} />
               <div style={{
                 position: 'absolute', top: 12, right: 12,
@@ -69,18 +69,18 @@ export default function Projects() {
 
             {/* Content Area */}
             <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontWeight: 800, fontSize: 20, color: '#e6edf3', marginBottom: 8 }}>
+              <h3 style={{ fontWeight: 800, fontSize: 20, color: 'var(--text-main)', marginBottom: 8 }}>
                 {p.name}
               </h3>
-              <p style={{ color: '#8b949e', fontSize: 13, lineHeight: 1.6, marginBottom: 20, flex: 1 }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.6, marginBottom: 20, flex: 1 }}>
                 {p.desc}
               </p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
                 {p.stack.map(s => (
                   <span key={s} style={{
-                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                    color: '#c9d1d9', fontSize: 11, padding: '4px 10px', borderRadius: 6,
+                    background: 'var(--alpha-05)', border: '1px solid var(--alpha-10)',
+                    color: 'var(--text-main)', fontSize: 11, padding: '4px 10px', borderRadius: 6,
                   }}>
                     {s}
                   </span>

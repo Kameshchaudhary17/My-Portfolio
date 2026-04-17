@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NAV_ITEMS } from '../data';
+import ThemeToggle from './ThemeToggle';
 
-export default function Navbar({ active, setActive }) {
+export default function Navbar({ active, setActive, theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -14,7 +15,7 @@ export default function Navbar({ active, setActive }) {
   const styles = {
     nav: {
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      background: scrolled ? 'rgba(6,9,15,0.95)' : 'transparent',
+      background: scrolled ? 'var(--bg-glass-hover)' : 'transparent',
       backdropFilter: scrolled ? 'blur(16px)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border-muted)' : '1px solid transparent',
       transition: 'all 0.3s ease',
@@ -40,18 +41,18 @@ export default function Navbar({ active, setActive }) {
     }),
     hamburger: {
       display: 'none', background: 'transparent', border: 'none',
-      color: '#e6edf3', cursor: 'pointer', fontSize: 20, padding: 4,
+      color: 'var(--text-main)', cursor: 'pointer', fontSize: 20, padding: 4,
     },
     mobileMenu: {
       display: menuOpen ? 'flex' : 'none',
       flexDirection: 'column', gap: 4,
-      padding: '1rem 1.5rem', background: '#0d1117',
-      borderTop: '1px solid #21262d',
+      padding: '1rem 1.5rem', background: 'var(--bg-card)',
+      borderTop: '1px solid var(--border-muted)',
     },
     mobileBtn: (isActive) => ({
-      background: isActive ? 'rgba(121,255,151,0.08)' : 'transparent',
-      border: isActive ? '1px solid rgba(121,255,151,0.3)' : '1px solid transparent',
-      color: isActive ? '#79ff97' : '#8b949e',
+      background: isActive ? 'var(--alpha-08)' : 'transparent',
+      border: isActive ? '1px solid var(--border-glow)' : '1px solid transparent',
+      color: isActive ? 'var(--accent-green)' : 'var(--text-muted)',
       fontSize: 13,
       padding: '10px 16px', borderRadius: 8, cursor: 'pointer',
       textAlign: 'left', transition: 'all 0.2s',
@@ -68,7 +69,7 @@ export default function Navbar({ active, setActive }) {
     <nav style={styles.nav}>
       <div style={styles.inner}>
         <span style={styles.logo} onClick={() => handleNav('About')}>
-          KC<span style={{ color: '#e6edf3' }}>.</span>
+          KC<span style={{ color: 'var(--text-main)' }}>.</span>
         </span>
 
         {/* Desktop */}
@@ -78,12 +79,16 @@ export default function Navbar({ active, setActive }) {
               {n}
             </button>
           ))}
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
         {/* Hamburger */}
-        <button style={styles.hamburger} className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? '✕' : '☰'}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="mobile-only">
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+          <button style={{ ...styles.hamburger, display: 'block' }} onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -98,8 +103,10 @@ export default function Navbar({ active, setActive }) {
       <style>{`
         @media (max-width: 640px) {
           .desktop-nav { display: none !important; }
-          .hamburger { display: block !important; }
           .mobile-menu { display: ${menuOpen ? 'flex' : 'none'} !important; }
+        }
+        @media (min-width: 641px) {
+          .mobile-only { display: none !important; }
         }
       `}</style>
     </nav>
