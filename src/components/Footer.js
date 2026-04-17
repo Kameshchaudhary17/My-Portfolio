@@ -21,7 +21,6 @@ export default function Footer() {
         {' · '}
         <a href={DATA.linkedin} target="_blank" rel="noreferrer" style={{ color: '#8b949e', textDecoration: 'none' }} className="hover-underline">LinkedIn</a>
       </p>
-      <p style={{ fontSize: 11, color: '#21262d' }}>Built with React · Powered by Claude AI · {new Date().getFullYear()}</p>
     </footer>
   );
 }

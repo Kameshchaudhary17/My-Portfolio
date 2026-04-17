@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { GraduationCap, Award, CheckCircle2 } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 
 export default function Education() {
   const edu = DATA.education;
@@ -21,7 +21,7 @@ export default function Education() {
       <h2 style={{ fontWeight: 800, fontSize: 'clamp(1.5rem,3vw,2.2rem)', marginBottom: '0.5rem' }}>
         Education<span style={{ color: '#79ff97' }}>.</span>
       </h2>
-      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Academic background & strengths</p>
+      <p style={{ color: '#8b949e', fontSize: 13, marginBottom: '2rem' }}>Academic background & qualifications</p>
 
       <motion.div
         variants={container}
@@ -57,26 +57,6 @@ export default function Education() {
                 background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
                 color: '#c9d1d9', fontSize: 13, padding: '5px 14px', borderRadius: 8,
               }}>{m}</span>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div 
-          variants={item}
-          className="glass-panel" 
-          style={{ padding: '2rem', borderTop: '3px solid #58a6ff', borderRadius: 16 }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#e6edf3', marginBottom: 20 }}>
-            <Award size={20} color="#58a6ff" />
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, letterSpacing: '1px', fontWeight: 600 }}>ADDITIONAL STRENGTHS</p>
-          </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
-            {DATA.strengths.map((s, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.6 }}>
-                <CheckCircle2 size={18} color="#58a6ff" style={{ flexShrink: 0, marginTop: 2 }} />
-                {s}
-              </div>
             ))}
           </div>
         </motion.div>

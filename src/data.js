@@ -7,7 +7,7 @@ export const DATA = {
   github: "https://github.com/kameshchaudhary17",
   linkedin: "https://www.linkedin.com/in/kamesh-chaudhary-11397b294/",
   summary:
-    "Motivated and detail-oriented Full-Stack Developer with hands-on experience building scalable web applications using React.js, Node.js, and .NET. Skilled in designing RESTful APIs, managing SQL/NoSQL databases, and delivering user-centric solutions. Demonstrated ability to collaborate effectively in agile team environments. Eager to bring strong problem-solving skills and a passion for clean, efficient code to a dynamic tech team.",
+    "Full-Stack Developer crafting scalable, user-focused web applications with clean, efficient code and a problem-solving mindset.",
   stats: [
     { value: "1", label: "Years", sub: "Experience" },
     { value: "3", label: "Major", sub: "Projects" },

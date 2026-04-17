@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DATA } from '../data';
-import { Briefcase, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import { Briefcase, Calendar, ChevronDown, ChevronUp, CheckCircle2, Award } from 'lucide-react';
 
 export default function Experience() {
   const [expanded, setExpanded] = useState(null);
@@ -108,6 +108,29 @@ export default function Experience() {
             </motion.div>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div 
+        variants={item}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="glass-panel" 
+        style={{ padding: '2rem', marginTop: 40, borderTop: '3px solid #58a6ff', borderRadius: 16 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#e6edf3', marginBottom: 20 }}>
+          <Award size={20} color="#58a6ff" />
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, letterSpacing: '1px', fontWeight: 600 }}>ADDITIONAL STRENGTHS</p>
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+          {DATA.strengths.map((s, i) => (
+            <div key={i} style={{ display: 'flex', gap: 12, color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.6 }}>
+              <CheckCircle2 size={18} color="#58a6ff" style={{ flexShrink: 0, marginTop: 2 }} />
+              {s}
+            </div>
+          ))}
+        </div>
       </motion.div>
     </section>
   );
