@@ -1,9 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare, Download } from 'lucide-react';
+
+function CountUp({ value }) {
+  const match = String(value).match(/^(\d+)(.*)$/);
+  const target = match ? parseInt(match[1]) : 0;
+  const suffix = match ? match[2] : '';
+  const [count, setCount] = useState(0);
+  const [triggered, setTriggered] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !triggered) setTriggered(true);
+    }, { threshold: 0.5 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [triggered]);
+
+  useEffect(() => {
+    if (!triggered) return;
+    const steps = 50;
+    const stepTime = 1500 / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const eased = 1 - Math.pow(1 - step / steps, 3);
+      setCount(Math.round(eased * target));
+      if (step >= steps) clearInterval(timer);
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [triggered, target]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 
 export default function About({ setActive }) {
+  const [displayText, setDisplayText] = useState('');
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = DATA.roles[roleIndex];
+    let timeout;
+    if (!isDeleting && displayText === currentRole) {
+      timeout = setTimeout(() => setIsDeleting(true), 1800);
+    } else if (isDeleting && displayText === '') {
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex(prev => (prev + 1) % DATA.roles.length);
+      }, 400);
+    } else {
+      timeout = setTimeout(() => {
+        setDisplayText(isDeleting
+          ? displayText.slice(0, -1)
+          : currentRole.slice(0, displayText.length + 1)
+        );
+      }, isDeleting ? 50 : 100);
+    }
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, roleIndex]);
   const s = {
     section: { maxWidth: 1100, margin: '0 auto', padding: '8rem 1.5rem 3rem' },
     grid: { display: 'grid', gridTemplateColumns: '1fr auto', gap: '3rem', alignItems: 'center' },
@@ -51,7 +108,15 @@ export default function About({ setActive }) {
           >
             {DATA.name}
           </motion.h1>
-          <motion.p variants={item} style={s.title}>{DATA.title}</motion.p>
+          <motion.p variants={item} style={s.title}>
+            {displayText}
+            <span style={{
+              display: 'inline-block', width: 2, height: '1em',
+              background: 'var(--accent-green)', marginLeft: 3,
+              verticalAlign: 'text-bottom',
+              animation: 'blink 1s step-end infinite',
+            }} />
+          </motion.p>
           <motion.p variants={item} style={s.summary}>{DATA.summary}</motion.p>
           
           <motion.div variants={item} style={s.links}>
@@ -63,6 +128,20 @@ export default function About({ setActive }) {
             </a>
             <a href={DATA.linkedin} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
               <Linkedin size={18} color="var(--accent-green)" /> LinkedIn
+            </a>
+            <a
+              href="/Kamesh_Chaudhary_CV.pdf"
+              download="Kamesh_Chaudhary_CV.pdf"
+              className="hover-glow"
+              style={{
+                textDecoration: 'none', color: '#0a0f0c',
+                padding: '10px 20px', borderRadius: 10,
+                display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 700,
+                background: 'var(--accent-green)',
+                border: '1px solid var(--accent-green)',
+              }}
+            >
+              <Download size={18} /> Download CV
             </a>
           </motion.div>
 
@@ -116,7 +195,7 @@ export default function About({ setActive }) {
             whileHover={{ y: -5, background: 'var(--alpha-02)' }}
             style={{ padding: '2rem', textAlign: 'center', borderRadius: 16 }}
           >
-            <div style={{ fontWeight: 800, fontSize: 36, color: 'var(--text-main)', marginBottom: 4 }}>{st.value}</div>
+            <div style={{ fontWeight: 800, fontSize: 36, color: 'var(--text-main)', marginBottom: 4 }}><CountUp value={st.value} /></div>
             <div style={{ color: 'var(--accent-green)', fontSize: 13, letterSpacing: '0.5px', fontWeight: 600 }}>{st.label}</div>
             <div style={{ color: 'var(--alpha-40)', fontSize: 12 }}>{st.sub}</div>
           </motion.div>

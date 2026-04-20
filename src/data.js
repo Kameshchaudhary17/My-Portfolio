@@ -1,6 +1,7 @@
 export const DATA = {
   name: "Kamesh Chaudhary",
   title: "Full-Stack Developer",
+  roles: ["Full-Stack Developer", "React Developer", "Node.js Engineer", "Problem Solver"],
   location: "Kathmandu, Nepal",
   email: "kameshchaudhary17@gmail.com",
   phone: "9827089956",

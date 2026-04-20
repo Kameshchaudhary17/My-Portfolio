@@ -182,3 +182,8 @@ button, input, textarea, .mono-font, .tag {
 .float-anim {
   animation: float 6s ease-in-out infinite;
 }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
