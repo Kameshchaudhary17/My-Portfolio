@@ -73,6 +73,22 @@ export const DATA = {
       color: "#f78166",
       image: "/projects/library.png",
     },
+    {
+      name: "Vehicle Parts Management System",
+      tag: "Full-Stack .NET",
+      stack: ["ASP.NET Core", "C#", "Entity Framework Core", "SQL Server", "React.js", "REST API"],
+      desc: "Full-featured vehicle parts sales and management platform with parts inventory, stock tracking, supplier management, and role-based staff access control. Relational SQL Server schema via EF Core ORM connected to a React.js frontend through RESTful APIs.",
+      color: "#ffa657",
+      image: "/projects/vehicle_parts.png",
+    },
+    {
+      name: "Trek Direct Nepal",
+      tag: "MERN Stack",
+      stack: ["React.js", "Node.js", "Express.js", "MongoDB", "REST API"],
+      desc: "Tourism booking platform connecting trekkers with certified local guides across Nepal's major trekking routes. Features guide listings, availability calendar, booking confirmation, user authentication, and search/filter by region, rating, and price.",
+      color: "#d2a8ff",
+      image: "/projects/trek_nepal.png",
+    },
   ],
   education: {
     degree: "BSc (Hons) Computing",
@@ -108,6 +124,8 @@ Projects:
 1. Community Fix — civic tech platform (React.js, Node.js, MongoDB, REST API) for reporting/tracking community issues in real-time with admin dashboard.
 2. Plant Disease Detection — ML-powered system (Python, Machine Learning, Image Processing) detecting plant diseases from leaf images with reliable accuracy.
 3. Library Management System — full .NET app (ASP.NET Core, Entity Framework, SQL Server, MVC) with inventory, borrowing/return, and overdue tracking.
+4. Vehicle Parts Management System — Full-stack .NET & React platform for inventory and sales tracking with EF Core and SQL Server.
+5. Trek Direct Nepal — MERN stack tourism booking platform connecting trekkers with local guides, featuring real-time booking and guide management.
 
 Education: BSc (Hons) Computing from Itahari International College, graduated 2025. Modules: Web Development, Software Engineering, Database Systems, OOP, Networks.
 
