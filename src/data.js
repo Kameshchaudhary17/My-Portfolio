@@ -96,6 +96,48 @@ export const DATA = {
     year: "2025",
     modules: ["Web Development", "Software Engineering", "Database Systems", "Object-Oriented Programming", "Networks"],
   },
+  certifications: [
+    {
+      id: "aws-cloud-foundations",
+      title: "AWS Academy Graduate - Cloud Foundations",
+      issuer: "AWS Academy",
+      date: "June 2026",
+      pdfUrl: "/certificates/aws-cloud-foundations.pdf",
+      skills: ["Cloud Computing", "AWS Core Services", "IAM & Security", "Billing & Architecture"],
+      color: "#58a6ff",
+      description: "Acquired fundamental knowledge of cloud concepts, AWS core services, security, architecture, pricing, and support."
+    },
+    {
+      id: "aws-data-engineering",
+      title: "AWS Academy Graduate - Data Engineering",
+      issuer: "AWS Academy",
+      date: "June 2026",
+      pdfUrl: "/certificates/aws-data-engineering.pdf",
+      skills: ["Redshift", "AWS Glue", "EMR & Athena", "ETL Pipelines", "Data Lake"],
+      color: "#79ff97",
+      description: "Learned to build, maintain, and secure robust data pipelines, orchestrate ETL jobs, and perform big data analytics using AWS data services."
+    },
+    {
+      id: "aws-ml-foundations",
+      title: "AWS Academy Graduate - Machine Learning Foundations",
+      issuer: "AWS Academy",
+      date: "June 2026",
+      pdfUrl: "/certificates/aws-ml-foundations.pdf",
+      skills: ["SageMaker", "Jupyter", "Model Training", "Data Preprocessing"],
+      color: "#e8c87a",
+      description: "Gained an understanding of machine learning concepts, building pipelines, data preprocessing, and model training/deployment on AWS SageMaker."
+    },
+    {
+      id: "aws-ml-nlp",
+      title: "AWS Academy Graduate - ML for Natural Language Processing",
+      issuer: "AWS Academy",
+      date: "June 2026",
+      pdfUrl: "/certificates/aws-ml-nlp.pdf",
+      skills: ["Comprehend", "Lex & Polly", "NLP Algorithms", "Conversational AI"],
+      color: "#d2a8ff",
+      description: "Focused on solving NLP problems using Amazon AI services and deploying customized machine learning algorithms for text and speech analysis."
+    }
+  ],
   strengths: [
     "Strong analytical and problem-solving skills with attention to code quality and performance",
     "Proven ability to collaborate in team environments and communicate technical concepts clearly",
@@ -104,7 +146,7 @@ export const DATA = {
   ],
 };
 
-export const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Education", "Chat"];
+export const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Education", "Certifications", "Chat"];
 
 export const SYSTEM_PROMPT = `You are an AI assistant embedded in Kamesh Chaudhary's personal portfolio website. You have full knowledge of his background. Here is his complete profile:
 
@@ -128,5 +170,11 @@ Projects:
 5. Trek Direct Nepal — MERN stack tourism booking platform connecting trekkers with local guides, featuring real-time booking and guide management.
 
 Education: BSc (Hons) Computing from Itahari International College, graduated 2025. Modules: Web Development, Software Engineering, Database Systems, OOP, Networks.
+
+AWS Certifications:
+1. AWS Academy Graduate - Cloud Foundations (June 2026)
+2. AWS Academy Graduate - Data Engineering (June 2026)
+3. AWS Academy Graduate - Machine Learning Foundations (June 2026)
+4. AWS Academy Graduate - Machine Learning for Natural Language Processing (June 2026)
 
 Be helpful, friendly, and professional. Represent Kamesh positively and accurately. Keep answers concise (2-4 sentences). If asked about availability or hiring, say Kamesh is open to new opportunities.`;
