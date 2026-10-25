@@ -5,19 +5,53 @@ import { SYSTEM_PROMPT, DATA } from '../data';
 import { Send, Bot, User, Key, Info, Sparkles, Trash2 } from 'lucide-react';
 
 const QUICK = [
-  "What are his core skills?",
+  "Tell me about Altren Group",
+  "What are his core technical skills?",
+  "What is his DevOps & Cloud experience?",
   "Tell me about Community Fix",
-  "Is he available for hire?",
-  "What's his tech stack?",
+  "What is his IT Support & Networking background?",
+  "How can I download his resume?",
+  "Is he available for hire or remote roles?",
   "How can I contact Kamesh?",
-  "What's his experience?",
-  "Tell me about his education",
 ];
 
 const LOCAL_RESPONSES = [
   {
+    patterns: ['altren', 'current role', 'current job', 'present', 'where does he work', 'latest experience'],
+    reply: () => {
+      const e = DATA.experience[0];
+      return `**${e.role}** at **${e.company}** *(${e.period})*\n\n${e.bullets.map(b => `- ${b}`).join('\n')}\n\nStack: Next.js, Nest.js, Node.js, Docker, Kubernetes, Git, Agile.`;
+    },
+  },
+  {
+    patterns: ['portpro'],
+    reply: () => {
+      const e = DATA.experience[1];
+      return `**${e.role}** at **${e.company}** *(${e.period})*\n\n${e.bullets.map(b => `- ${b}`).join('\n')}\n\nStack: React.js, Node.js, RESTful APIs, Git, Agile ceremonies.`;
+    },
+  },
+  {
+    patterns: ['teaching assistant', 'gta', 'itahari', 'lecturer', 'mentor', 'teach'],
+    reply: () => {
+      const e = DATA.experience[2];
+      return `**${e.role}** at **${e.company}** *(${e.period})*\n\n${e.bullets.map(b => `- ${b}`).join('\n')}`;
+    },
+  },
+  {
     patterns: ['skill', 'tech', 'stack', 'know', 'language', 'framework', 'tools', 'expertise', 'good at', 'proficient'],
-    reply: () => `**Kamesh's Tech Stack**\n\n**Frontend**\n${DATA.skills.Frontend.map(s => `- ${s}`).join('\n')}\n\n**Backend**\n${DATA.skills.Backend.map(s => `- ${s}`).join('\n')}\n\n**Databases**\n${DATA.skills.Database.map(s => `- ${s}`).join('\n')}\n\n**Tools & Practices**\n${DATA.skills['Tools & Practices'].map(s => `- ${s}`).join('\n')}`,
+    reply: () => `**Kamesh's Complete Technical Stack**\n\n` + Object.entries(DATA.skills).map(([cat, list]) => `**${cat}**\n${list.map(s => `- ${s}`).join('\n')}`).join('\n\n'),
+  },
+  {
+    patterns: ['devops', 'cloud', 'docker', 'kubernetes', 'k8s', 'ci/cd', 'aws', 'azure'],
+    reply: () => `**DevOps & Cloud Infrastructure**\n\n- **Containers & Orchestration:** Docker containerization and Kubernetes scalable deployment workflows.\n- **CI/CD:** Automated testing and pipelines via Git & GitHub Actions.\n- **Cloud Platforms:** Practical exposure to AWS & Azure, backed by **4 AWS Academy Graduate Certifications** (Cloud Foundations, Data Engineering, ML Foundations, ML for NLP).\n\nTools: ${DATA.skills['DevOps & Cloud'].join(', ')}.`,
+  },
+  {
+    patterns: ['support', 'helpdesk', 'troubleshoot', 'network', 'hardware', 'tcp', 'dns', 'dhcp', 'it support', 'application support'],
+    reply: () => `**Application Support & Networking**\n\nAs a Software Developer & Application Support Specialist, Kamesh possesses strong diagnostic and systems skills:\n\n${DATA.skills['IT Support & Networking'].map(s => `- ${s}`).join('\n')}\n\nHe also mentored undergraduate students in Network Operating System fundamentals and lab exercises.`,
+  },
+  {
+    patterns: ['resume', 'cv', 'download resume', 'pdf', 'document'],
+    reply: () => `You can view and download Kamesh's official resume here:\n\n📄 **[Download Kamesh Chaudhary Resume (PDF)](${DATA.resumePdf})**\n\nDirect contact: ${DATA.email} | ${DATA.phone}`,
   },
   {
     patterns: ['community fix', 'civic', 'final year', 'fyp'],
@@ -42,33 +76,19 @@ const LOCAL_RESPONSES = [
   },
   {
     patterns: ['project', 'built', 'build', 'portfolio', 'work sample', 'what have you made'],
-    reply: () => `**Kamesh's Projects**\n\n${DATA.projects.map(p => `**${p.name}** *(${p.tag})*\n${p.desc}\n> Stack: ${p.stack.join(', ')}`).join('\n\n')}`,
-  },
-  {
-    patterns: ['portpro', 'intern', 'internship', 'full stack developer intern'],
-    reply: () => {
-      const e = DATA.experience[0];
-      return `**${e.role}** at **${e.company}** *(${e.period})*\n\n${e.bullets.map(b => `- ${b}`).join('\n')}`;
-    },
-  },
-  {
-    patterns: ['teaching assistant', 'gta', 'itahari', 'lecturer', 'mentor', 'teach'],
-    reply: () => {
-      const e = DATA.experience[1];
-      return `**${e.role}** at **${e.company}** *(${e.period})*\n\n${e.bullets.map(b => `- ${b}`).join('\n')}`;
-    },
+    reply: () => `**Kamesh's Featured Projects**\n\n${DATA.projects.map(p => `**${p.name}** *(${p.tag})*\n${p.desc}\n> Stack: ${p.stack.join(', ')}`).join('\n\n')}`,
   },
   {
     patterns: ['experience', 'work history', 'worked', 'job', 'career', 'professional'],
-    reply: () => `**Work Experience**\n\n${DATA.experience.map(e => `**${e.role}** — ${e.company} *(${e.period})*\n${e.bullets.map(b => `- ${b}`).join('\n')}`).join('\n\n')}`,
+    reply: () => `**Work Experience Summary**\n\n${DATA.experience.map(e => `**${e.role}** — ${e.company} *(${e.period})*\n${e.bullets.map(b => `- ${b}`).join('\n')}`).join('\n\n')}`,
   },
   {
     patterns: ['education', 'degree', 'college', 'university', 'study', 'studied', 'bsc', 'computing', 'graduate'],
-    reply: () => `**Education**\n\n**${DATA.education.degree}**\n${DATA.education.school} — Class of ${DATA.education.year}\n\n**Modules covered:**\n${DATA.education.modules.map(m => `- ${m}`).join('\n')}`,
+    reply: () => `**Education**\n\n**${DATA.education.degree}**\n${DATA.education.school} — Class of ${DATA.education.year}\n\n**Core modules:**\n${DATA.education.modules.map(m => `- ${m}`).join('\n')}`,
   },
   {
     patterns: ['hire', 'available', 'open to work', 'looking for', 'opportunity', 'job offer', 'recruit', 'position'],
-    reply: () => `Yes! **Kamesh is actively open to new opportunities.**\n\nHe's looking for roles in full-stack development where he can work with React, Node.js, and modern web technologies.\n\nBest way to reach him:\n- **Email:** ${DATA.email}\n- **LinkedIn:** [linkedin.com/in/kamesh-chaudhary](${DATA.linkedin})\n- **GitHub:** [github.com/kameshchaudhary17](${DATA.github})`,
+    reply: () => `Yes! **Kamesh is open to new opportunities**, including remote full-stack engineering and software development roles.\n\nBest ways to connect:\n- **Email:** ${DATA.email}\n- **Phone:** ${DATA.phone}\n- **LinkedIn:** [linkedin.com/in/kamesh-chaudhary](${DATA.linkedin})\n- **GitHub:** [github.com/kameshchaudhary17](${DATA.github})`,
   },
   {
     patterns: ['contact', 'email', 'phone', 'reach', 'message', 'call', 'linkedin', 'github'],
@@ -76,59 +96,27 @@ const LOCAL_RESPONSES = [
   },
   {
     patterns: ['location', 'where', 'based', 'country', 'city', 'nepal', 'kathmandu'],
-    reply: () => `Kamesh is based in **${DATA.location}**. He is open to remote work and relocation opportunities.`,
+    reply: () => `Kamesh is based in **${DATA.location}** and works remotely with international engineering teams. He is fully set up for global remote work across time zones.`,
   },
   {
-    patterns: ['react', 'reactjs', 'frontend', 'ui', 'interface'],
-    reply: () => `Kamesh has strong **React.js** experience — he's used it in production at **Portpro** during his internship and built his **Community Fix** civic platform with it.\n\nFrontend skills: ${DATA.skills.Frontend.join(', ')}.`,
+    patterns: ['react', 'next', 'nextjs', 'reactjs', 'frontend'],
+    reply: () => `Kamesh is proficient in **React.js** and **Next.js**, building modern, server-rendered and responsive web apps with Tailwind CSS, Redux, and TypeScript.`,
   },
   {
-    patterns: ['node', 'nodejs', 'backend', 'server', 'api', 'express'],
-    reply: () => `Kamesh builds backends with **Node.js** and **Express.js**, designing RESTful APIs and integrating them with frontend applications.\n\nBackend skills: ${DATA.skills.Backend.join(', ')}.`,
+    patterns: ['node', 'nest', 'nestjs', 'backend', 'server', 'api', 'express'],
+    reply: () => `On the backend, Kamesh uses **Node.js**, **Express.js**, **Nest.js**, and **ASP.NET Core (.NET)**, designing secure RESTful APIs with JWT authentication and clean MVC architecture.`,
   },
   {
-    patterns: ['database', 'mongo', 'mongodb', 'postgres', 'postgresql', 'sql', 'data'],
-    reply: () => `Kamesh is comfortable with both SQL and NoSQL databases.\n\n**Database skills:**\n${DATA.skills.Database.map(s => `- ${s}`).join('\n')}`,
-  },
-  {
-    patterns: ['typescript', 'ts'],
-    reply: () => `Yes, Kamesh works with **TypeScript** — it's part of his frontend toolkit alongside JavaScript ES6+, React.js, HTML5, and CSS3.`,
-  },
-  {
-    patterns: ['strength', 'soft skill', 'strength', 'trait', 'quality', 'personality'],
-    reply: () => `**Kamesh's Key Strengths**\n\n${DATA.strengths.map(s => `- ${s}`).join('\n')}`,
-  },
-  {
-    patterns: ['git', 'github', 'version control', 'agile', 'scrum', 'workflow'],
-    reply: () => `Kamesh practices professional development workflows:\n\n- **Git & GitHub** for version control and collaboration\n- **Agile/Scrum** methodology from his internship at Portpro\n- **Code reviews** and sprint planning experience\n- **Postman** for API testing and documentation`,
-  },
-  {
-    patterns: ['year', 'how long', 'how many', 'years of experience', 'junior', 'senior', 'level'],
-    reply: () => `Kamesh has **${DATA.stats[0].value} year** of professional experience as a Full-Stack Developer, with hands-on internship work at **Portpro** and academic project experience building ${DATA.stats[1].value} major projects across ${DATA.stats[2].value} tech stacks.`,
-  },
-  {
-    patterns: ['summary', 'about', 'who is', 'tell me about kamesh', 'introduce', 'overview', 'background'],
-    reply: () => `**About Kamesh Chaudhary**\n\n${DATA.summary}\n\n- 📍 Based in ${DATA.location}\n- 💼 ${DATA.stats[0].value} year professional experience\n- 🚀 ${DATA.stats[1].value} major projects shipped\n- 🛠 ${DATA.stats[2].value} tech stacks · ${DATA.stats[3].value} tools & frameworks\n\nCurrently **open to new opportunities** — feel free to reach out at ${DATA.email}`,
+    patterns: ['strength', 'soft skill', 'trait', 'quality', 'personality'],
+    reply: () => `**Kamesh's Core Strengths**\n\n${DATA.strengths.map(s => `- ${s}`).join('\n')}`,
   },
   {
     patterns: ['hello', 'hi', 'hey', 'howdy', 'greet', 'good morning', 'good afternoon'],
-    reply: () => `Hi there! 👋 I'm Kamesh's AI assistant — I have full knowledge of his skills, projects, and experience.\n\nYou can ask me things like:\n- *"What's his tech stack?"*\n- *"Tell me about his projects"*\n- *"Is he available for hire?"*\n\nWhat would you like to know?`,
-  },
-  {
-    patterns: ['salary', 'rate', 'compensation', 'pay', 'cost'],
-    reply: () => `Salary expectations depend on the role and company. For specifics, reach out directly:\n\n- **Email:** ${DATA.email}\n- **LinkedIn:** [linkedin.com/in/kamesh-chaudhary](${DATA.linkedin})\n\nKamesh is open to discussing compensation based on the opportunity.`,
-  },
-  {
-    patterns: ['remote', 'hybrid', 'onsite', 'on-site', 'work from home'],
-    reply: () => `Kamesh is open to **remote, hybrid, and on-site** roles. He's currently based in ${DATA.location} and is flexible about work arrangements.`,
-  },
-  {
-    patterns: ['why hire', 'why should', 'why kamesh', 'what makes', 'stand out', 'unique'],
-    reply: () => `**Why hire Kamesh?**\n\n- ✅ Full-stack skills — React frontend to Node.js/ASP.NET backend\n- ✅ Real production experience from his internship at **Portpro**\n- ✅ Teaching background — communicates technical concepts clearly\n- ✅ ${DATA.stats[1].value} shipped projects across web, ML, and .NET ecosystems\n- ✅ Quick learner — picked up new stacks on the job\n- ✅ Open to work and actively looking for his next role`,
+    reply: () => `Hi there! 👋 I'm Kamesh's AI assistant with full knowledge of his resume, work at Altren Group, Portpro, and his technical projects.\n\nFeel free to ask about his skills, projects, DevOps experience, or download his resume!`,
   },
 ];
 
-const FALLBACK = `I'm not sure about that specific detail. Here's what I can help with:\n\n- **Skills & tech stack**\n- **Projects** (Community Fix, Plant Disease Detection, Library System)\n- **Work experience** (Portpro, GTA role)\n- **Education & background**\n- **Contact & availability**\n\nTry asking one of those!`;
+const FALLBACK = `I'm not sure about that specific detail. Here's what I can help with:\n\n- **Skills & tech stack** (Next.js, Nest.js, React, Node.js, .NET, Docker, Kubernetes)\n- **Experience** (Altren Group, Portpro, IIC GTA)\n- **Projects** (Community Fix, Plant Disease Detection, Library System)\n- **Resume download**\n- **Contact & hiring availability**\n\nTry asking one of those!`;
 
 function getLocalReply(msg) {
   const lower = msg.toLowerCase();

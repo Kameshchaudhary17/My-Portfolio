@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare, Download } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare, Download, ExternalLink, CheckCircle, Sparkles, Terminal } from 'lucide-react';
 
 function CountUp({ value }) {
   const match = String(value).match(/^(\d+)(.*)$/);
@@ -45,7 +45,7 @@ export default function About({ setActive }) {
     const currentRole = DATA.roles[roleIndex];
     let timeout;
     if (!isDeleting && displayText === currentRole) {
-      timeout = setTimeout(() => setIsDeleting(true), 1800);
+      timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayText === '') {
       timeout = setTimeout(() => {
         setIsDeleting(false);
@@ -57,39 +57,70 @@ export default function About({ setActive }) {
           ? displayText.slice(0, -1)
           : currentRole.slice(0, displayText.length + 1)
         );
-      }, isDeleting ? 50 : 100);
+      }, isDeleting ? 40 : 80);
     }
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex]);
+
   const s = {
-    section: { maxWidth: 1100, margin: '0 auto', padding: '8rem 1.5rem 3rem' },
-    grid: { display: 'grid', gridTemplateColumns: '1fr auto', gap: '3rem', alignItems: 'center' },
-    tag: { color: 'var(--accent-green)', fontSize: 14, marginBottom: 16, letterSpacing: '1px', fontFamily: 'var(--font-mono)' },
-    name: { fontWeight: 800, fontSize: 'clamp(2.5rem,6vw,4.5rem)', lineHeight: 1.05, marginBottom: '0.8rem' },
-    title: { fontWeight: 500, fontSize: 'clamp(1.2rem,2.5vw,1.6rem)', color: 'var(--alpha-60)', marginBottom: '1.5rem' },
-    summary: { color: 'var(--alpha-70)', lineHeight: 1.85, fontSize: 16, maxWidth: 600, marginBottom: '2.5rem' },
-    links: { display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: '2rem' },
-    meta: { display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '3rem' },
-    metaItem: { color: 'var(--alpha-50)', fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 },
-    avatar: {
-      width: 140, height: 140, borderRadius: '24%',
-      background: 'linear-gradient(135deg, rgba(121,255,151,0.1), rgba(88,166,255,0.1))',
+    section: { maxWidth: 1100, margin: '0 auto', padding: '6rem 1.5rem 3rem' },
+    grid: { display: 'grid', gridTemplateColumns: '1fr auto', gap: '3.5rem', alignItems: 'center' },
+    badge: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 8,
+      background: 'rgba(121, 255, 151, 0.1)',
+      border: '1px solid rgba(121, 255, 151, 0.3)',
+      color: 'var(--accent-green)',
+      fontSize: 12,
+      fontWeight: 600,
+      padding: '6px 14px',
+      borderRadius: 20,
+      marginBottom: 20,
+      fontFamily: 'var(--font-mono)',
+    },
+    pulseDot: {
+      width: 8,
+      height: 8,
+      borderRadius: '50%',
+      background: 'var(--accent-green)',
+      boxShadow: '0 0 10px var(--accent-green)',
+    },
+    name: { fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', lineHeight: 1.1, marginBottom: '0.6rem' },
+    title: { fontWeight: 600, fontSize: 'clamp(1.15rem, 2.5vw, 1.5rem)', color: 'var(--alpha-70)', marginBottom: '1.25rem', minHeight: '2rem' },
+    summary: { color: 'var(--alpha-70)', lineHeight: 1.85, fontSize: 15.5, maxWidth: 660, marginBottom: '2rem' },
+    links: { display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: '2rem' },
+    meta: { display: 'flex', gap: '1.75rem', flexWrap: 'wrap', marginBottom: '2.5rem' },
+    metaItem: { color: 'var(--alpha-60)', fontSize: 13.5, display: 'flex', alignItems: 'center', gap: 7 },
+    avatarCard: {
+      position: 'relative',
+      width: 170,
+      height: 170,
+      borderRadius: 28,
+      background: 'linear-gradient(135deg, rgba(121,255,151,0.15), rgba(88,166,255,0.15))',
       border: '1px solid rgba(121,255,151,0.3)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontWeight: 800, fontSize: 44, color: 'var(--accent-green)',
-      flexShrink: 0, boxShadow: '0 0 40px rgba(121,255,151,0.1)'
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 800,
+      color: 'var(--accent-green)',
+      flexShrink: 0,
+      boxShadow: '0 0 50px rgba(121,255,151,0.12)',
     },
   };
 
   const container = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.15 } }
+    show: { opacity: 1, transition: { staggerChildren: 0.12 } }
   };
 
   const item = {
     hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
+    show: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
   };
+
+  const keySkills = ["React.js", "Next.js", "Nest.js", "Node.js", "ASP.NET Core", "Docker", "Kubernetes", "AWS"];
 
   return (
     <motion.section 
@@ -98,9 +129,14 @@ export default function About({ setActive }) {
       initial="hidden"
       animate="show"
     >
-      <div style={s.grid}>
+      <div style={s.grid} className="hero-grid">
         <div>
-          <motion.p variants={item} style={s.tag}>&gt; hello_world_</motion.p>
+          {/* Status Badge */}
+          <motion.div variants={item} style={s.badge}>
+            <span style={s.pulseDot} />
+            <span>Currently Software Developer @ Altren Group (Remote)</span>
+          </motion.div>
+
           <motion.h1 
             variants={item} 
             style={s.name} 
@@ -108,7 +144,9 @@ export default function About({ setActive }) {
           >
             {DATA.name}
           </motion.h1>
+
           <motion.p variants={item} style={s.title}>
+            <span style={{ color: 'var(--accent-blue)' }}>&gt; </span>
             {displayText}
             <span style={{
               display: 'inline-block', width: 2, height: '1em',
@@ -117,74 +155,158 @@ export default function About({ setActive }) {
               animation: 'blink 1s step-end infinite',
             }} />
           </motion.p>
-          <motion.p variants={item} style={s.summary}>{DATA.summary}</motion.p>
-          
+
+          <motion.p variants={item} style={s.summary}>
+            {DATA.summary}
+          </motion.p>
+
+          {/* Quick Skill Chips */}
+          <motion.div variants={item} style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: '2rem' }}>
+            {keySkills.map(sk => (
+              <span key={sk} style={{
+                fontSize: 11.5,
+                fontWeight: 600,
+                padding: '4px 10px',
+                borderRadius: 6,
+                background: 'var(--alpha-04)',
+                border: '1px solid var(--alpha-10)',
+                color: 'var(--text-main)',
+              }}>
+                {sk}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Action & Contact Links */}
           <motion.div variants={item} style={s.links}>
-            <a href={`mailto:${DATA.email}`} className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '10px 24px', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 600 }}>
-              <Mail size={20} color="var(--accent-green)" /> {DATA.email}
-            </a>
-            <a href={DATA.github} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
-              <Github size={18} color="var(--accent-green)" /> GitHub
-            </a>
-            <a href={DATA.linkedin} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
-              <Linkedin size={18} color="var(--accent-green)" /> LinkedIn
-            </a>
             <a
-              href="/Kamesh_Chaudhary_CV.pdf"
-              download="Kamesh_Chaudhary_CV.pdf"
+              href={DATA.resumePdf}
+              download="Kamesh_Chaudhary_Resume.pdf"
               className="hover-glow"
               style={{
-                textDecoration: 'none', color: '#0a0f0c',
-                padding: '10px 20px', borderRadius: 10,
+                textDecoration: 'none', color: '#06090f',
+                padding: '11px 22px', borderRadius: 10,
                 display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 700,
                 background: 'var(--accent-green)',
                 border: '1px solid var(--accent-green)',
+                boxShadow: '0 4px 20px rgba(121, 255, 151, 0.25)',
               }}
             >
-              <Download size={18} /> Download CV
+              <Download size={18} /> Download Resume
+            </a>
+
+            <a
+              href={DATA.resumePdf}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-panel hover-glow"
+              style={{
+                textDecoration: 'none', color: 'var(--text-main)',
+                padding: '11px 20px', borderRadius: 10,
+                display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 600,
+              }}
+            >
+              <ExternalLink size={17} color="var(--accent-green)" /> View Resume PDF
+            </a>
+
+            <a href={`mailto:${DATA.email}`} className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '11px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 500 }}>
+              <Mail size={17} color="var(--accent-green)" /> {DATA.email}
+            </a>
+
+            <a href={DATA.github} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '11px 18px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
+              <Github size={17} color="var(--accent-green)" /> GitHub
+            </a>
+
+            <a href={DATA.linkedin} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '11px 18px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
+              <Linkedin size={17} color="var(--accent-green)" /> LinkedIn
             </a>
           </motion.div>
 
           <motion.div variants={item} style={s.meta}>
-            <span style={s.metaItem}><MapPin size={16} /> {DATA.location}</span>
+            <span style={s.metaItem}><MapPin size={16} color="var(--accent-blue)" /> {DATA.location}</span>
             <a href={`tel:${DATA.phone}`} style={{ ...s.metaItem, textDecoration: 'none', cursor: 'pointer' }} className="hover-underline">
-              <Phone size={16} /> {DATA.phone}
+              <Phone size={16} color="var(--accent-green)" /> {DATA.phone}
             </a>
+            <span style={s.metaItem}><CheckCircle size={16} color="var(--accent-green)" /> Open to Remote & Full-Time Roles</span>
           </motion.div>
 
-          <motion.button
-            variants={item}
-            onClick={() => setActive('Chat')}
-            className="glow-btn"
-            style={{
-              background: 'rgba(121,255,151,0.05)', border: '1px solid rgba(121,255,151,0.3)',
-              color: 'var(--accent-green)', fontSize: 14, fontWeight: 600,
-              padding: '12px 24px', borderRadius: 12, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 10
-            }}
-          >
-            <MessageSquare size={18} /> Ask AI Assistant →
-          </motion.button>
+          {/* Assistant Button */}
+          <motion.div variants={item} style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setActive('Experience')}
+              className="glow-btn"
+              style={{
+                background: 'rgba(88,166,255,0.06)', border: '1px solid rgba(88,166,255,0.3)',
+                color: 'var(--accent-blue)', fontSize: 13.5, fontWeight: 600,
+                padding: '11px 22px', borderRadius: 10, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 8
+              }}
+            >
+              <Terminal size={16} /> Explore Experience →
+            </button>
+            <button
+              onClick={() => setActive('Projects')}
+              className="glow-btn"
+              style={{
+                background: 'rgba(121,255,151,0.06)', border: '1px solid rgba(121,255,151,0.3)',
+                color: 'var(--accent-green)', fontSize: 13.5, fontWeight: 600,
+                padding: '11px 22px', borderRadius: 10, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 8
+              }}
+            >
+              <Sparkles size={16} /> View Projects →
+            </button>
+            <button
+              onClick={() => setActive('Chat')}
+              className="glow-btn"
+              style={{
+                background: 'var(--alpha-03)', border: '1px solid var(--border-muted)',
+                color: 'var(--text-main)', fontSize: 13.5, fontWeight: 600,
+                padding: '11px 22px', borderRadius: 10, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 8
+              }}
+            >
+              <MessageSquare size={16} color="var(--accent-green)" /> Ask AI Assistant →
+            </button>
+          </motion.div>
         </div>
 
+        {/* Profile Card / Avatar */}
         <motion.div 
           variants={item}
-          style={s.avatar} 
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          style={s.avatarCard} 
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          KC
+          <div style={{ fontSize: 50, fontWeight: 800, letterSpacing: '-1px' }}>KC</div>
+          <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--alpha-80)', letterSpacing: '1px', marginTop: 4 }}>
+            DEV & SUPPORT
+          </span>
+          <div style={{
+            position: 'absolute',
+            bottom: -10,
+            background: 'var(--bg-card)',
+            border: '1px solid rgba(121,255,151,0.4)',
+            color: 'var(--accent-green)',
+            fontSize: 10,
+            padding: '3px 10px',
+            borderRadius: 12,
+            fontWeight: 700,
+          }}>
+            NEPAL · REMOTE
+          </div>
         </motion.div>
       </div>
 
+      {/* Stats Counter Section */}
       <motion.div 
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
         style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))',
-          gap: 16, marginTop: '5rem',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: 16, marginTop: '4.5rem',
         }}
       >
         {DATA.stats.map((st, i) => (
@@ -192,8 +314,8 @@ export default function About({ setActive }) {
             key={i} 
             variants={item}
             className="glass-panel" 
-            whileHover={{ y: -5, background: 'var(--alpha-02)' }}
-            style={{ padding: '2rem', textAlign: 'center', borderRadius: 16 }}
+            whileHover={{ y: -5, background: 'var(--alpha-03)' }}
+            style={{ padding: '1.8rem 1.5rem', textAlign: 'center', borderRadius: 16 }}
           >
             <div style={{ fontWeight: 800, fontSize: 36, color: 'var(--text-main)', marginBottom: 4 }}><CountUp value={st.value} /></div>
             <div style={{ color: 'var(--accent-green)', fontSize: 13, letterSpacing: '0.5px', fontWeight: 600 }}>{st.label}</div>
@@ -201,6 +323,15 @@ export default function About({ setActive }) {
           </motion.div>
         ))}
       </motion.div>
+
+      <style>{`
+        @media (max-width: 860px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            text-align: left;
+          }
+        }
+      `}</style>
     </motion.section>
   );
 }
