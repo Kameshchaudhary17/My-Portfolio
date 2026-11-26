@@ -80,6 +80,7 @@ src/
     Experience.js   — Expandable timeline cards
     Projects.js     — Hover-animated project cards
     Education.js    — Degree + strengths
+    CV.js           — One-page CV view, download & print
     Chat.js         — Claude AI chat assistant
     Footer.js       — Links + credits
   App.js            — Root layout + section routing
@@ -87,6 +88,21 @@ src/
   index.js          — React entry point
 public/
   index.html        — HTML template
+```
+
+---
+
+## 📄 Updating the CV
+
+The CV tab and both PDFs are generated from `src/data.js` through `src/cvTemplate.js`:
+
+- `public/Kamesh_Chaudhary_CV.pdf`: Software Engineer | Data Management
+- `public/Kamesh_Chaudhary_IT_Support_CV.pdf`: IT Support & Network Technician (wording in `src/cvItSupport.js`)
+
+After editing your details, rebuild both two-page A4 PDFs (needs Chrome or Edge installed):
+
+```bash
+npm run cv
 ```
 
 ---
@@ -100,4 +116,4 @@ All portfolio content lives in `src/data.js`. Edit your:
 
 ---
 
-Built with React · Powered by Claude AI · Kathmandu, Nepal
+Built with React · Dubai, UAE

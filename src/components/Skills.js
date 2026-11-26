@@ -1,24 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { Code, Server, Database, Cloud, Network, Wrench, Terminal, Cpu } from 'lucide-react';
+import { Code, Server, Database, Cloud, Layers, Network, Headset, Wrench, Terminal, Cpu } from 'lucide-react';
 
 export default function Skills() {
   const iconMap = {
+    "Data Management": <Layers size={20} color="#e8c87a" />,
+    Databases: <Database size={20} color="#ffa657" />,
     Frontend: <Code size={20} color="var(--accent-green)" />,
     Backend: <Server size={20} color="var(--accent-blue)" />,
-    Databases: <Database size={20} color="#ffa657" />,
     "DevOps & Cloud": <Cloud size={20} color="#79ff97" />,
-    "IT Support & Networking": <Network size={20} color="#e8c87a" />,
+    "IT Support": <Headset size={20} color="#ffa657" />,
+    Networking: <Network size={20} color="#1ba0d7" />,
     "Tools & Practices": <Wrench size={20} color="#d2a8ff" />,
   };
 
   const accentColorMap = {
+    "Data Management": "#e8c87a",
+    Databases: "#ffa657",
     Frontend: "var(--accent-green)",
     Backend: "var(--accent-blue)",
-    Databases: "#ffa657",
     "DevOps & Cloud": "#79ff97",
-    "IT Support & Networking": "#e8c87a",
+    "IT Support": "#ffa657",
+    Networking: "#1ba0d7",
     "Tools & Practices": "#d2a8ff",
   };
 
@@ -42,7 +46,7 @@ export default function Skills() {
           Technical Skills & Expertise<span style={{ color: 'var(--accent-green)' }}>.</span>
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>
-          Comprehensive toolkit across modern full-stack engineering, cloud infrastructure, and application support.
+          Data management, databases and full-stack engineering, backed by cloud, DevOps, IT support and networking skills.
         </p>
       </div>
 
@@ -162,12 +166,14 @@ export default function Skills() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem 2.5rem' }}>
           {[
-            { label: 'React.js & Next.js (Modern Frontend)', pct: 92, color: '#79ff97' },
+            { label: 'Data Management (Modeling, Integrity, Migration)', pct: 86, color: '#e8c87a' },
+            { label: 'Databases & SQL (SQL Server, PostgreSQL, MongoDB)', pct: 87, color: '#ffa657' },
+            { label: 'React.js & Next.js (Modern Frontend)', pct: 90, color: '#79ff97' },
             { label: 'Node.js, Express & Nest.js (REST APIs)', pct: 88, color: '#58a6ff' },
-            { label: 'ASP.NET Core (.NET) & C# (MVC Architecture)', pct: 82, color: '#ffa657' },
-            { label: 'Databases (MongoDB, PostgreSQL, SQL Server)', pct: 85, color: '#e8c87a' },
-            { label: 'DevOps & Containers (Docker, Kubernetes, CI/CD)', pct: 80, color: '#79ff97' },
-            { label: 'IT Support, Hardware & Networking (TCP/IP, DNS)', pct: 86, color: '#d2a8ff' },
+            { label: 'ASP.NET Core (.NET) & C# (MVC Architecture)', pct: 82, color: '#d2a8ff' },
+            { label: 'Cloud & DevOps (AWS Data Services, Docker, K8s)', pct: 80, color: '#79ff97' },
+            { label: 'IT Support (Help Desk, AD & Entra ID, M365)', pct: 85, color: '#ffa657' },
+            { label: 'Networking (TCP/IP, DNS, DHCP, VLANs)', pct: 80, color: '#1ba0d7' },
           ].map(({ label, pct, color }, idx) => (
             <div key={label}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13.5, marginBottom: 8 }}>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kameshchaudhary17.github.io/My-Portfolio/sitemap.xml
+Sitemap: https://kameshchaudhary.vercel.app/sitemap.xml

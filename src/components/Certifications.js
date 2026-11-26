@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DATA } from '../data';
-import { Award, ExternalLink, Download, Eye, X, Cloud, Database, Brain, Network } from 'lucide-react';
+import { Award, ExternalLink, Download, Eye, X, Cloud, Database, Brain, Network, Router, Headset } from 'lucide-react';
 
-const AwsBadgeIcon = ({ color, id }) => {
+const CertBadgeIcon = ({ color, id, issuer }) => {
+  const isCisco = issuer.includes('Cisco');
   // Select matching sub-icon based on certification type
   const getIcon = () => {
     switch (id) {
@@ -13,6 +14,10 @@ const AwsBadgeIcon = ({ color, id }) => {
         return <Brain size={24} color={color} />;
       case 'aws-ml-nlp':
         return <Network size={24} color={color} />;
+      case 'cisco-networking-basics':
+        return <Router size={24} color={color} />;
+      case 'cisco-it-customer-support':
+        return <Headset size={24} color={color} />;
       case 'aws-cloud-foundations':
       default:
         return <Cloud size={24} color={color} />;
@@ -53,21 +58,21 @@ const AwsBadgeIcon = ({ color, id }) => {
         {getIcon()}
       </div>
 
-      {/* Mini AWS Sub-tag */}
+      {/* Mini issuer sub-tag */}
       <div style={{
         position: 'absolute',
         bottom: -2,
-        background: '#232f3e',
-        color: '#ff9900',
+        background: isCisco ? '#0b2f4a' : '#232f3e',
+        color: isCisco ? '#1ba0d7' : '#ff9900',
         fontSize: 7.5,
         fontWeight: 800,
         padding: '1px 5px',
         borderRadius: 4,
-        border: '1px solid #ff9900',
+        border: `1px solid ${isCisco ? '#1ba0d7' : '#ff9900'}`,
         letterSpacing: '0.5px',
         boxShadow: '0 2px 5px rgba(0,0,0,0.5)'
       }}>
-        AWS
+        {isCisco ? 'CISCO' : 'AWS'}
       </div>
     </div>
   );
@@ -109,7 +114,7 @@ export default function Certifications() {
         <Award size={24} color="var(--accent-green)" />
       </div>
       <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: '2.5rem' }}>
-        Professional validation of cloud expertise and machine learning implementations
+        Cloud, data, networking and IT support credentials from AWS Academy and Cisco Networking Academy
       </p>
 
       {/* Grid Layout */}
@@ -143,7 +148,7 @@ export default function Certifications() {
           >
             {/* Header section with Badge Icon & Issuer */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <AwsBadgeIcon color={c.color} id={c.id} />
+              <CertBadgeIcon color={c.color} id={c.id} issuer={c.issuer} />
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                 <span style={{

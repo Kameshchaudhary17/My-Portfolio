@@ -39,7 +39,7 @@ export default function Navbar({ active, setActive, theme, toggleTheme }) {
       color: isActive ? 'var(--accent-green)' : 'var(--text-muted)',
       fontSize: 13,
       fontWeight: isActive ? 600 : 500,
-      padding: '7px 15px', borderRadius: 8, cursor: 'pointer',
+      padding: '7px 12px', borderRadius: 8, cursor: 'pointer',
       transition: 'all 0.25s', boxShadow: isActive ? '0 0 10px rgba(121,255,151,0.1)' : 'none',
     }),
     resumeBtn: {
@@ -103,11 +103,11 @@ export default function Navbar({ active, setActive, theme, toggleTheme }) {
           ))}
           <a
             href={DATA.resumePdf}
-            download="Kamesh_Chaudhary_Resume.pdf"
+            download={DATA.resumeFileName}
             style={styles.resumeBtn}
             className="hover-glow"
           >
-            <Download size={14} /> Resume
+            <Download size={14} /> CV
           </a>
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
@@ -130,7 +130,7 @@ export default function Navbar({ active, setActive, theme, toggleTheme }) {
         ))}
         <a
           href={DATA.resumePdf}
-          download="Kamesh_Chaudhary_Resume.pdf"
+          download={DATA.resumeFileName}
           style={{
             ...styles.mobileBtn(false),
             textDecoration: 'none',
@@ -141,16 +141,16 @@ export default function Navbar({ active, setActive, theme, toggleTheme }) {
             fontWeight: 700,
           }}
         >
-          <Download size={15} /> Download Resume (PDF)
+          <Download size={15} /> Download CV (PDF)
         </a>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1040px) {
           .desktop-nav { display: none !important; }
           .mobile-menu { display: ${menuOpen ? 'flex' : 'none'} !important; }
         }
-        @media (min-width: 769px) {
+        @media (min-width: 1041px) {
           .mobile-only { display: none !important; }
         }
       `}</style>

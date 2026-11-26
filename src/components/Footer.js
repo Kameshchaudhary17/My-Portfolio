@@ -14,10 +14,10 @@ export default function Footer() {
           {DATA.name}
         </p>
         <p style={{ color: 'var(--text-main)', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>
-          Software Developer | Application Support · {DATA.location}
+          {DATA.title} · {DATA.location}
         </p>
         <p style={{ color: 'var(--alpha-50)', fontSize: 12.5, marginBottom: 20 }}>
-          Currently delivering remote full-stack engineering at <strong>Altren Group</strong>.
+          Currently engineering remotely at <strong>Altren Group</strong>.
         </p>
 
         {/* Quick Contact Bar */}
@@ -30,8 +30,8 @@ export default function Footer() {
             <Phone size={15} /> {DATA.phone}
           </a>
           <span style={{ color: 'var(--alpha-30)' }}>•</span>
-          <a href={DATA.resumePdf} download="Kamesh_Chaudhary_Resume.pdf" style={{ color: 'var(--accent-green)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }} className="hover-underline">
-            <Download size={15} /> Resume (PDF)
+          <a href={DATA.resumePdf} download={DATA.resumeFileName} style={{ color: 'var(--accent-green)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }} className="hover-underline">
+            <Download size={15} /> CV (PDF)
           </a>
         </div>
 

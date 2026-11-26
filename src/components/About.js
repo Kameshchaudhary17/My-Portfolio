@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { DATA } from '../data';
-import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare, Download, ExternalLink, CheckCircle, Sparkles, Terminal } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Phone, MessageSquare, Download, FileText, Sparkles, Terminal } from 'lucide-react';
 
 function CountUp({ value }) {
   const match = String(value).match(/^(\d+)(.*)$/);
@@ -64,7 +64,7 @@ export default function About({ setActive }) {
 
   const s = {
     section: { maxWidth: 1100, margin: '0 auto', padding: '6rem 1.5rem 3rem' },
-    grid: { display: 'grid', gridTemplateColumns: '1fr auto', gap: '3.5rem', alignItems: 'center' },
+    grid: { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', gap: '3.5rem', alignItems: 'center' },
     badge: {
       display: 'inline-flex',
       alignItems: 'center',
@@ -86,7 +86,7 @@ export default function About({ setActive }) {
       background: 'var(--accent-green)',
       boxShadow: '0 0 10px var(--accent-green)',
     },
-    name: { fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', lineHeight: 1.1, marginBottom: '0.6rem' },
+    name: { fontWeight: 800, fontSize: 'clamp(2.1rem, 8vw, 4.2rem)', lineHeight: 1.1, marginBottom: '0.6rem' },
     title: { fontWeight: 600, fontSize: 'clamp(1.15rem, 2.5vw, 1.5rem)', color: 'var(--alpha-70)', marginBottom: '1.25rem', minHeight: '2rem' },
     summary: { color: 'var(--alpha-70)', lineHeight: 1.85, fontSize: 15.5, maxWidth: 660, marginBottom: '2rem' },
     links: { display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: '2rem' },
@@ -120,7 +120,7 @@ export default function About({ setActive }) {
     show: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
   };
 
-  const keySkills = ["React.js", "Next.js", "Nest.js", "Node.js", "ASP.NET Core", "Docker", "Kubernetes", "AWS"];
+  const keySkills = ["SQL Server", "PostgreSQL", "MongoDB", "Data Modeling", "ETL / AWS Glue", "React.js", "Next.js", "Nest.js", "ASP.NET Core", "Docker", "AWS"];
 
   return (
     <motion.section 
@@ -134,7 +134,7 @@ export default function About({ setActive }) {
           {/* Status Badge */}
           <motion.div variants={item} style={s.badge}>
             <span style={s.pulseDot} />
-            <span>Currently Software Developer @ Altren Group (Remote)</span>
+            <span>Based in {DATA.locationShort} · Open to new opportunities</span>
           </motion.div>
 
           <motion.h1 
@@ -181,7 +181,7 @@ export default function About({ setActive }) {
           <motion.div variants={item} style={s.links}>
             <a
               href={DATA.resumePdf}
-              download="Kamesh_Chaudhary_Resume.pdf"
+              download={DATA.resumeFileName}
               className="hover-glow"
               style={{
                 textDecoration: 'none', color: '#06090f',
@@ -192,25 +192,23 @@ export default function About({ setActive }) {
                 boxShadow: '0 4px 20px rgba(121, 255, 151, 0.25)',
               }}
             >
-              <Download size={18} /> Download Resume
+              <Download size={18} /> Download CV
             </a>
 
-            <a
-              href={DATA.resumePdf}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={() => setActive('CV')}
               className="glass-panel hover-glow"
               style={{
-                textDecoration: 'none', color: 'var(--text-main)',
+                color: 'var(--text-main)', cursor: 'pointer',
                 padding: '11px 20px', borderRadius: 10,
                 display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 600,
               }}
             >
-              <ExternalLink size={17} color="var(--accent-green)" /> View Resume PDF
-            </a>
+              <FileText size={17} color="var(--accent-green)" /> View CV
+            </button>
 
             <a href={`mailto:${DATA.email}`} className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '11px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 500 }}>
-              <Mail size={17} color="var(--accent-green)" /> {DATA.email}
+              <Mail size={17} color="var(--accent-green)" /> Email Me
             </a>
 
             <a href={DATA.github} target="_blank" rel="noreferrer" className="glass-panel hover-glow" style={{ textDecoration: 'none', color: 'var(--text-main)', padding: '11px 18px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
@@ -227,7 +225,9 @@ export default function About({ setActive }) {
             <a href={`tel:${DATA.phone}`} style={{ ...s.metaItem, textDecoration: 'none', cursor: 'pointer' }} className="hover-underline">
               <Phone size={16} color="var(--accent-green)" /> {DATA.phone}
             </a>
-            <span style={s.metaItem}><CheckCircle size={16} color="var(--accent-green)" /> Open to Remote & Full-Time Roles</span>
+            <a href={`mailto:${DATA.email}`} style={{ ...s.metaItem, textDecoration: 'none' }} className="hover-underline">
+              <Mail size={16} color="var(--accent-yellow)" /> {DATA.email}
+            </a>
           </motion.div>
 
           {/* Assistant Button */}
@@ -280,7 +280,7 @@ export default function About({ setActive }) {
         >
           <div style={{ fontSize: 50, fontWeight: 800, letterSpacing: '-1px' }}>KC</div>
           <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--alpha-80)', letterSpacing: '1px', marginTop: 4 }}>
-            DEV & SUPPORT
+            ENGINEER · DATA
           </span>
           <div style={{
             position: 'absolute',
@@ -293,7 +293,7 @@ export default function About({ setActive }) {
             borderRadius: 12,
             fontWeight: 700,
           }}>
-            NEPAL · REMOTE
+            DUBAI · UAE
           </div>
         </motion.div>
       </div>
@@ -305,7 +305,7 @@ export default function About({ setActive }) {
         whileInView="show"
         viewport={{ once: true }}
         style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
           gap: 16, marginTop: '4.5rem',
         }}
       >

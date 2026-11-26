@@ -6,12 +6,19 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Education from './components/Education';
 import Certifications from './components/Certifications';
+import CV from './components/CV';
 import Chat from './components/Chat';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import { NAV_ITEMS } from './data';
+
+const sectionFromHash = () => {
+  const hash = window.location.hash.replace('#', '').toLowerCase();
+  return NAV_ITEMS.find(n => n.toLowerCase() === hash) || 'About';
+};
 
 export default function App() {
-  const [active, setActive] = useState('About');
+  const [active, setActive] = useState(sectionFromHash);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'dark';
   });
@@ -20,6 +27,20 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Keep the URL in sync so recruiters can share links like /#cv or /#projects
+  useEffect(() => {
+    const target = active === 'About' ? window.location.pathname : `#${active.toLowerCase()}`;
+    if (sectionFromHash() !== active || (active === 'About' && window.location.hash)) {
+      window.history.pushState(null, '', target);
+    }
+  }, [active]);
+
+  useEffect(() => {
+    const onPop = () => setActive(sectionFromHash());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -32,6 +53,7 @@ export default function App() {
     Projects: <Projects />,
     Education: <Education />,
     Certifications: <Certifications />,
+    CV: <CV />,
     Chat: <Chat />,
   };
 
